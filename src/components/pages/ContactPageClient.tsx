@@ -6,6 +6,17 @@ import { Button } from '@/components/ui/button'
 import { ContentProvider, useContent } from '@/contexts/ContentContext'
 import { EditableText } from '@/components/content/EditableText'
 
+function formatPhone(raw: string): string {
+  const digits = raw.replace(/[^\d]/g, '')
+  if (digits.length === 11 && digits.startsWith('1')) {
+    return `+1 (${digits.slice(1, 4)}) ${digits.slice(4, 7)}-${digits.slice(7)}`
+  }
+  if (digits.length === 10) {
+    return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6)}`
+  }
+  return raw
+}
+
 function ContactContent() {
   const { getContent } = useContent()
 
@@ -126,7 +137,7 @@ function ContactContent() {
                       href={`tel:${phone}`}
                       className="text-brand-primary hover:text-brand-primary-dark"
                     >
-                      {phone}
+                      {formatPhone(phone)}
                     </a>
                   </CardContent>
                 </Card>
