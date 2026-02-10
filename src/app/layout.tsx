@@ -2,6 +2,9 @@ import type { Metadata } from "next"
 import "./globals.css"
 import { Header } from "@/components/layout/Header"
 import { Footer } from "@/components/layout/Footer"
+import { EditModeProvider } from "@/contexts/EditModeContext"
+import { getSiteContent } from "@/lib/content-fetcher"
+import { DEFAULT_CONTENT } from "@/lib/content"
 
 export const metadata: Metadata = {
   title: {
@@ -12,19 +15,28 @@ export const metadata: Metadata = {
   keywords: ["AI software", "supply chain AI", "warehouse management", "enterprise AI", "intelligent automation", "Atlanta"],
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const dbContent = await getSiteContent('ai')
+  const defaults: Record<string, string> = {}
+  for (const [key, val] of Object.entries(DEFAULT_CONTENT)) {
+    defaults[key] = val.value
+  }
+  const footerContent = { ...defaults, ...dbContent }
+
   return (
     <html lang="en">
       <body className="antialiased">
-        <div className="flex min-h-screen flex-col">
-          <Header />
-          <main className="flex-1">{children}</main>
-          <Footer />
-        </div>
+        <EditModeProvider>
+          <div className="flex min-h-screen flex-col">
+            <Header />
+            <main className="flex-1">{children}</main>
+            <Footer content={footerContent} />
+          </div>
+        </EditModeProvider>
       </body>
     </html>
   )
