@@ -1,5 +1,5 @@
 import { Metadata } from 'next'
-import { getSiteContent } from '@/lib/content-fetcher'
+import { getSiteContent, getCompanyContact } from '@/lib/content-fetcher'
 import { DEFAULT_CONTENT } from '@/lib/content'
 import { ContactPageClient } from '@/components/pages/ContactPageClient'
 
@@ -10,10 +10,15 @@ export const metadata: Metadata = {
 
 export default async function ContactPage() {
   const dbContent = await getSiteContent('ai')
+  const companyContact = await getCompanyContact('om-ai-solutions', {
+    phone: 'ai_global_contact_phone',
+    email: 'ai_global_contact_email',
+    name: 'ai_global_company_name',
+  })
   const defaults: Record<string, string> = {}
   for (const [key, val] of Object.entries(DEFAULT_CONTENT)) {
     defaults[key] = val.value
   }
-  const content = { ...defaults, ...dbContent }
+  const content = { ...defaults, ...dbContent, ...companyContact }
   return <ContactPageClient initialContent={content} />
 }

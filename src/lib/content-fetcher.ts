@@ -50,3 +50,29 @@ export async function getSiteContent(
 
   return content
 }
+
+export async function getCompanyContact(
+  slug: string,
+  keyMap: { phone: string; email: string; name: string }
+): Promise<Record<string, string>> {
+  const supabase = createClient(supabaseUrl, supabaseAnonKey)
+
+  const { data, error } = await supabase
+    .from('company_configs')
+    .select('config')
+    .eq('id', slug)
+    .single()
+
+  if (error || !data?.config) return {}
+
+  const cfg = data.config as Record<string, unknown>
+  const contact = cfg.contact as Record<string, string> | undefined
+  const company = cfg.company as Record<string, string> | undefined
+
+  const result: Record<string, string> = {}
+  if (contact?.phone) result[keyMap.phone] = contact.phone
+  if (contact?.email) result[keyMap.email] = contact.email
+  if (company?.short_name) result[keyMap.name] = company.short_name
+
+  return result
+}

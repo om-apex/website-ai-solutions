@@ -3,7 +3,7 @@ import "./globals.css"
 import { Header } from "@/components/layout/Header"
 import { Footer } from "@/components/layout/Footer"
 import { EditModeProvider } from "@/contexts/EditModeContext"
-import { getSiteContent } from "@/lib/content-fetcher"
+import { getSiteContent, getCompanyContact } from "@/lib/content-fetcher"
 import { DEFAULT_CONTENT } from "@/lib/content"
 
 export const metadata: Metadata = {
@@ -21,11 +21,16 @@ export default async function RootLayout({
   children: React.ReactNode
 }>) {
   const dbContent = await getSiteContent('ai')
+  const companyContact = await getCompanyContact('om-ai-solutions', {
+    phone: 'ai_global_contact_phone',
+    email: 'ai_global_contact_email',
+    name: 'ai_global_company_name',
+  })
   const defaults: Record<string, string> = {}
   for (const [key, val] of Object.entries(DEFAULT_CONTENT)) {
     defaults[key] = val.value
   }
-  const footerContent = { ...defaults, ...dbContent }
+  const footerContent = { ...defaults, ...dbContent, ...companyContact }
 
   return (
     <html lang="en">
