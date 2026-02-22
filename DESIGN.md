@@ -11,7 +11,7 @@ Marketing website for Om AI Solutions LLC, a subsidiary of Om Apex Holdings. Sho
 | Framework | Next.js 16.1.6 (App Router) |
 | Language | TypeScript 5, React 19 |
 | Styling | Tailwind CSS v4 |
-| UI Components | shadcn/ui (Button, Card) |
+| UI Components | shadcn/ui (Button, Card, Input, Textarea, Label) |
 | Database | Supabase (shared Owner Portal project: `hympgocuivzxzxllgmcy`) |
 | Icons | Lucide React |
 | Deployment | Vercel |
@@ -36,8 +36,11 @@ src/
 │   ├── layout.tsx              # Root layout (Header + Footer + EditModeProvider)
 │   ├── page.tsx                # Home (server → HomePageClient)
 │   ├── about/page.tsx          # About (server → AboutPageClient)
-│   └── contact/page.tsx        # Contact (server → ContactPageClient)
+│   ├── contact/page.tsx        # Contact (server → ContactPageClient)
+│   └── api/
+│       └── contact/route.ts    # Contact form POST (→ Supabase leads + HubSpot)
 ├── components/
+│   ├── ContactForm.tsx          # Contact form (tabbed: Demo Request / General)
 │   ├── brand/Logo.tsx          # Logo component (SVG + optional text)
 │   ├── content/EditableText.tsx # CMS inline editing (EditableText, EditableList, EditableStat)
 │   ├── layout/
@@ -46,10 +49,13 @@ src/
 │   ├── pages/
 │   │   ├── HomePageClient.tsx  # Home page client component
 │   │   ├── AboutPageClient.tsx # About page client component
-│   │   └── ContactPageClient.tsx # Contact page client component
+│   │   └── ContactPageClient.tsx # Contact page (tabbed form + direct contact)
 │   └── ui/
 │       ├── button.tsx          # Radix Button + CVA variants
-│       └── card.tsx            # Card component system
+│       ├── card.tsx            # Card component system
+│       ├── input.tsx           # Input component
+│       ├── textarea.tsx        # Textarea component
+│       └── label.tsx           # Label component
 ├── contexts/
 │   ├── ContentContext.tsx       # CMS content state provider
 │   └── EditModeContext.tsx      # Edit mode + auth
@@ -57,6 +63,7 @@ src/
     ├── brand.ts                # Brand config (colors, fonts, company info)
     ├── content.ts              # DEFAULT_CONTENT (~60 keys, ai_ prefix)
     ├── content-fetcher.ts      # Server-side Supabase content fetch
+    ├── hubspot.ts              # HubSpot v3 API helper (contacts + deals)
     ├── supabase.ts             # Supabase client helper
     └── utils.ts                # cn() utility
 ```
@@ -100,7 +107,10 @@ Uses simplified EditableText (modal overlay instead of shadcn Popover).
 
 ### Contact
 - Hero: heading, description
-- Contact Options: 3 cards (Demo, Inquiries, Partnership)
+- Contact Form: Tabbed — "Request a Demo" (demo_request) / "General Inquiry" (general)
+  - Submits to /api/contact → Supabase leads table + HubSpot CRM (dual-write)
+  - Fields: First Name, Last Name, Email*, Company, Phone, Message*
+  - Rate limited: 5 per IP per 10 minutes
 - Direct Contact: Email + Location + Phone (if set)
 - Parent Company: link to Om Apex Holdings
 
@@ -109,4 +119,4 @@ Uses simplified EditableText (modal overlay instead of shadcn Popover).
 - **Platform**: Vercel
 - **Domain**: omaisolutions.com (when DNS configured)
 - **Build**: `next build`
-- **Environment**: `NEXT_PUBLIC_SUPABASE_URL` + `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+- **Environment**: `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, `HUBSPOT_API_KEY_OMAPEX`
