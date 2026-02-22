@@ -1,10 +1,11 @@
 'use client'
 
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Mail, MapPin, Calendar, MessageSquare, Phone } from 'lucide-react'
-import { Button } from '@/components/ui/button'
+import { useState } from 'react'
+import { Card, CardContent } from '@/components/ui/card'
+import { Mail, MapPin, Phone } from 'lucide-react'
 import { ContentProvider, useContent } from '@/contexts/ContentContext'
 import { EditableText } from '@/components/content/EditableText'
+import { ContactForm } from '@/components/ContactForm'
 
 function formatPhone(raw: string): string {
   const digits = raw.replace(/[^\d]/g, '')
@@ -17,36 +18,15 @@ function formatPhone(raw: string): string {
   return raw
 }
 
+type FormTab = 'demo' | 'general'
+
 function ContactContent() {
   const { getContent } = useContent()
+  const [activeTab, setActiveTab] = useState<FormTab>('demo')
 
   const email = getContent('ai_global_contact_email', 'hello@omaisolutions.com')
   const phone = getContent('ai_global_contact_phone', '')
   const location = getContent('ai_global_contact_location', 'Atlanta, Georgia')
-
-  const contactOptions = [
-    {
-      icon: Calendar,
-      titleKey: 'ai_contact_option1_title',
-      descriptionKey: 'ai_contact_option1_description',
-      actionKey: 'ai_contact_option1_action',
-      href: `mailto:${email}?subject=Demo Request`,
-    },
-    {
-      icon: MessageSquare,
-      titleKey: 'ai_contact_option2_title',
-      descriptionKey: 'ai_contact_option2_description',
-      actionKey: 'ai_contact_option2_action',
-      href: `mailto:${email}`,
-    },
-    {
-      icon: Mail,
-      titleKey: 'ai_contact_option3_title',
-      descriptionKey: 'ai_contact_option3_description',
-      actionKey: 'ai_contact_option3_action',
-      href: `mailto:${email}?subject=Partnership Inquiry`,
-    },
-  ]
 
   return (
     <div>
@@ -68,37 +48,40 @@ function ContactContent() {
         </div>
       </section>
 
-      {/* Contact Options */}
+      {/* Contact Form */}
       <section className="py-20">
         <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            {contactOptions.map((option, index) => {
-              const Icon = option.icon
-              return (
-                <Card key={index} className="border-0 shadow-md text-center">
-                  <CardHeader>
-                    <div className="w-14 h-14 rounded-full bg-brand-primary-light flex items-center justify-center mx-auto mb-4">
-                      <Icon className="h-7 w-7 text-brand-primary" />
-                    </div>
-                    <CardTitle className="text-xl">
-                      <EditableText contentKey={option.titleKey} as="span" />
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    <EditableText
-                      contentKey={option.descriptionKey}
-                      as="p"
-                      className="text-gray-600"
-                    />
-                    <Button asChild className="bg-brand-primary hover:bg-brand-primary-dark">
-                      <a href={option.href}>
-                        {getContent(option.actionKey)}
-                      </a>
-                    </Button>
-                  </CardContent>
-                </Card>
-              )
-            })}
+          <div className="max-w-2xl mx-auto">
+            <div className="flex border-b border-gray-200 mb-8">
+              <button
+                onClick={() => setActiveTab('demo')}
+                className={`px-6 py-3 text-sm font-medium border-b-2 transition-colors ${
+                  activeTab === 'demo'
+                    ? 'border-brand-primary text-brand-primary'
+                    : 'border-transparent text-gray-500 hover:text-gray-700'
+                }`}
+              >
+                Request a Demo
+              </button>
+              <button
+                onClick={() => setActiveTab('general')}
+                className={`px-6 py-3 text-sm font-medium border-b-2 transition-colors ${
+                  activeTab === 'general'
+                    ? 'border-brand-primary text-brand-primary'
+                    : 'border-transparent text-gray-500 hover:text-gray-700'
+                }`}
+              >
+                General Inquiry
+              </button>
+            </div>
+
+            <div className="bg-white rounded-lg shadow-md p-8">
+              {activeTab === 'demo' ? (
+                <ContactForm formType="demo_request" />
+              ) : (
+                <ContactForm formType="general" />
+              )}
+            </div>
           </div>
         </div>
       </section>
