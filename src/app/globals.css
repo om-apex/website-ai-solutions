@@ -145,3 +145,104 @@
     font-family: var(--font-heading);
   }
 }
+
+/* ===== Blog Styles ===== */
+
+/* Blue horizontal rule below header image */
+.blog-rule {
+  border: none;
+  height: 3px;
+  background-color: var(--brand-primary);
+  margin: 1.5rem 0;
+}
+
+/* Part number badge on index cards */
+.blog-part-badge {
+  background-color: var(--brand-accent);
+}
+
+/* Article body — prose-like typography for markdown content */
+.blog-prose {
+  line-height: 1.8;
+  color: #374151;
+}
+
+.blog-prose h2 {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--brand-primary);
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+}
+
+.blog-prose h3 {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--brand-primary);
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.blog-prose p {
+  margin-bottom: 1.25rem;
+}
+
+.blog-prose ul {
+  list-style-type: disc;
+  padding-left: 1.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.blog-prose ol {
+  list-style-type: decimal;
+  padding-left: 1.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.blog-prose li {
+  margin-bottom: 0.5rem;
+}
+
+.blog-prose strong {
+  font-weight: 600;
+}
+
+.blog-prose a {
+  color: var(--brand-primary);
+  text-decoration: underline;
+}
+
+.blog-prose a:hover {
+  color: var(--brand-primary-dark);
+}
+
+/* Callout blocks — teal accent */
+.blog-prose .callout {
+  border-left: 4px solid #0d9488;
+  background-color: #f0fdfa;
+  padding: 1rem 1.25rem;
+  margin: 1.5rem 0;
+  border-radius: 0 0.5rem 0.5rem 0;
+}
+
+.blog-prose .callout-next-up {
+  border-left-color: #0d9488;
+  background-color: #f0fdfa;
+}
+
+.blog-prose .callout-question {
+  border-left-color: #0d9488;
+  background-color: #f0fdfa;
+}
+
+/* Hashtags block */
+.blog-prose .hashtags {
+  border-left: none;
+  background-color: transparent;
+  padding: 1rem 0;
+  margin-top: 2rem;
+  color: #0d9488;
+  font-size: 0.875rem;
+}

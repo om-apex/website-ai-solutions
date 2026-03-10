@@ -10,6 +10,7 @@ import { useState } from 'react'
 const navLinks = [
   { href: '/', label: 'Home' },
   { href: '/about', label: 'About' },
+  { href: '/blog', label: 'Blog' },
   { href: '/contact', label: 'Contact' },
 ]
 
@@ -33,7 +34,7 @@ export function Header() {
                 key={link.href}
                 href={link.href}
                 className={`text-sm font-medium transition-colors hover:text-brand-primary ${
-                  pathname === link.href ? 'text-brand-primary' : 'text-gray-600'
+                  (link.href === '/' ? pathname === '/' : pathname.startsWith(link.href)) ? 'text-brand-primary' : 'text-gray-600'
                 }`}
               >
                 {link.label}
@@ -65,7 +66,7 @@ export function Header() {
                   href={link.href}
                   onClick={() => setMobileMenuOpen(false)}
                   className={`text-sm font-medium transition-colors hover:text-brand-primary ${
-                    pathname === link.href ? 'text-brand-primary' : 'text-gray-600'
+                    (link.href === '/' ? pathname === '/' : pathname.startsWith(link.href)) ? 'text-brand-primary' : 'text-gray-600'
                   }`}
                 >
                   {link.label}
