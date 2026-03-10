@@ -26,6 +26,7 @@ Marketing website for Om AI Solutions LLC, a subsidiary of Om Apex Holdings. Sho
 | Accent Color | Gold #C9A227 |
 | Heading Font | Playfair Display (700) via next/font/google |
 | Body Font | Space Grotesk (300-700) via next/font/google |
+| Logo Name Font | Playfair Display font-bold (700), tracking-tight |
 | Email | hello@omaisolutions.com |
 | Location | Atlanta, Georgia |
 
