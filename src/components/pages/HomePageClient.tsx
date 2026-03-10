@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Brain, Warehouse, Mic, Sparkles, ArrowRight, CheckCircle } from 'lucide-react'
-import { ContentProvider, useContent } from '@/contexts/ContentContext'
+import { ContentProvider } from '@/contexts/ContentContext'
 import { EditableText, EditableList, EditableStat } from '@/components/content/EditableText'
 
 const productIcons = [Sparkles, Warehouse, Brain, Mic]
@@ -16,8 +16,6 @@ const productColors = [
 ]
 
 function HomeContent() {
-  const { getContent } = useContent()
-
   const products = [1, 2, 3, 4].map((i) => ({
     nameKey: `ai_home_product${i}_name`,
     descriptionKey: `ai_home_product${i}_description`,
@@ -161,22 +159,23 @@ function HomeContent() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 bg-gradient-to-r from-brand-primary to-brand-primary-dark">
-        <div className="container mx-auto px-4 text-center">
+      <section className="py-16 px-4">
+        <div className="max-w-4xl mx-auto rounded-3xl bg-gray-900 text-white p-8 md:p-12 text-center">
           <EditableText
             contentKey="ai_home_cta_title"
             as="h2"
-            className="text-3xl font-bold text-white mb-4"
+            className="text-3xl md:text-4xl font-bold mb-4"
+            fallback="Ready to start your AI journey"
           />
           <EditableText
             contentKey="ai_home_cta_description"
             as="p"
-            className="text-brand-primary-light mb-8 max-w-xl mx-auto"
+            className="text-lg text-gray-300 mb-8 max-w-2xl mx-auto"
+            fallback="Every journey starts with the first step. Know if you are ready. Where should you start? Take our survey to know to bring your team up-to-speed with AI and what are some of the low hanging fruits for your first AI project."
           />
-          <Button asChild size="lg" variant="secondary" className="bg-white text-brand-primary hover:bg-gray-100">
-            <Link href="/contact">
-              {getContent('ai_home_cta_button', 'Get in Touch')}
-              <ArrowRight className="ml-2 h-4 w-4" />
+          <Button asChild size="lg" className="bg-brand-primary hover:bg-brand-primary-dark text-white rounded-full px-8">
+            <Link href="/ai-readiness-survey">
+              <EditableText contentKey="ai_home_cta_button" as="span" fallback="AI Readiness Survey" />
             </Link>
           </Button>
         </div>
