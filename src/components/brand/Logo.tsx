@@ -16,7 +16,9 @@ export function Logo({ size = 'md', className = '', showText = false }: LogoProp
     <OmLogoWithText
       size={size}
       showText={showText}
+      showTagline
       companyName={brand.company.shortName}
+      tagline={brand.company.tagline}
       className={className}
     />
   )

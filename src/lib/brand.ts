@@ -66,7 +66,7 @@ export const omAiSolutions: Brand = {
   },
   company: {
     name: 'Om AI Solutions LLC',
-    shortName: 'Om AI',
+    shortName: 'Om AI Solutions',
     tagline: 'Intelligent Backbone for Your Business',
     email: 'hello@omaisolutions.com',
     location: 'Atlanta, Georgia',
