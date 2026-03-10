@@ -1,32 +1,49 @@
 import type { Metadata } from 'next';
+import { getPublishedArticles } from '@/lib/blog';
 import Image from 'next/image';
 import Link from 'next/link';
-import { getPublishedArticles } from '@/lib/blog';
 
 export const metadata: Metadata = {
   title: 'Blog | Om AI Solutions',
   description:
-    'AI in Supply Chain — a 10-part article series exploring how artificial intelligence is transforming supply chain operations.',
+    'Insights on AI-powered solutions for modern business operations.',
   openGraph: {
     title: 'Blog | Om AI Solutions',
     description:
-      'AI in Supply Chain — a 10-part article series exploring how artificial intelligence is transforming supply chain operations.',
+      'Insights on AI-powered solutions for modern business operations.',
   },
 };
 
 export default function BlogPage() {
   const articles = getPublishedArticles();
 
+  if (articles.length === 0) {
+    return (
+      <main className="container mx-auto px-4 py-24">
+        <div className="max-w-2xl mx-auto text-center">
+          <h1 className="text-4xl md:text-5xl font-bold text-brand-primary mb-6">
+            Blog
+          </h1>
+          <p className="text-lg text-gray-600 mb-4">
+            Articles coming soon. We are preparing insights on AI-powered
+            solutions for modern business operations.
+          </p>
+          <p className="text-sm text-gray-400">
+            Check back shortly for our first articles.
+          </p>
+        </div>
+      </main>
+    );
+  }
+
   return (
     <main className="container mx-auto px-4 py-12">
       <div className="max-w-4xl mx-auto mb-12 text-center">
         <h1 className="text-4xl md:text-5xl font-bold text-brand-primary mb-4">
-          AI in Supply Chain
+          Blog
         </h1>
         <p className="text-lg text-gray-600">
-          A {articles[0]?.seriesTotal ?? 10}-part series exploring how artificial
-          intelligence is transforming supply chain operations — from strategy to
-          execution.
+          Insights on AI-powered solutions for modern business operations.
         </p>
       </div>
 
