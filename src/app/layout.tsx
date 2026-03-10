@@ -1,5 +1,20 @@
 import type { Metadata } from "next"
+import { Playfair_Display, Space_Grotesk } from "next/font/google"
 import "./globals.css"
+
+const playfairDisplay = Playfair_Display({
+  subsets: ["latin"],
+  weight: ["700"],
+  display: "swap",
+  variable: "--font-playfair-display",
+})
+
+const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  display: "swap",
+  variable: "--font-space-grotesk",
+})
 import { Header } from "@/components/layout/Header"
 import { Footer } from "@/components/layout/Footer"
 import { EditModeProvider } from "@/contexts/EditModeContext"
@@ -33,7 +48,7 @@ export default async function RootLayout({
   const footerContent = { ...defaults, ...dbContent, ...companyContact }
 
   return (
-    <html lang="en">
+    <html lang="en" className={`${playfairDisplay.variable} ${spaceGrotesk.variable}`}>
       <body className="antialiased">
         <EditModeProvider>
           <div className="flex min-h-screen flex-col">

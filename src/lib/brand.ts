@@ -61,8 +61,8 @@ export const omAiSolutions: Brand = {
     accentLight: brandOklch.accentLight,
   },
   fonts: {
-    heading: 'Georgia, serif',
-    body: "'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, Roboto, 'Helvetica Neue', Arial, sans-serif",
+    heading: "'Playfair Display', serif",
+    body: "'Space Grotesk', sans-serif",
   },
   company: {
     name: 'Om AI Solutions LLC',
