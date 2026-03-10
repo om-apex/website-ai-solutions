@@ -24,7 +24,7 @@ export function Header() {
         <div className="flex h-20 items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2">
-            <Logo size="xl" showText />
+            <Logo size="2xl" showText />
           </Link>
 
           {/* Desktop Navigation */}
