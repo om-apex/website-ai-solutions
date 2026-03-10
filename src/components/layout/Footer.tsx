@@ -16,7 +16,7 @@ function formatPhone(raw: string): string {
 }
 
 export function Footer({ content = {} }: FooterProps) {
-  const email = content['ai_global_contact_email'] || 'info@omaisolutions.com'
+  const email = 'info@omaisolutions.com'
   const phone = content['ai_global_contact_phone'] || ''
   const location = content['ai_global_contact_location'] || 'Roswell, GA'
 

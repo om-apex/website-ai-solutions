@@ -236,19 +236,19 @@ export const DEFAULT_CONTENT: Record<string, ContentEntry> = {
 
   // CTA Section
   ai_home_cta_title: {
-    value: 'Ready to Transform Your Operations?',
+    value: 'Ready to start your AI journey',
     content_type: 'text',
     page: 'home',
     section: 'cta',
   },
   ai_home_cta_description: {
-    value: "Let's discuss how AI can optimize your warehouse and supply chain. Schedule a demo or consultation today.",
+    value: 'Every journey starts with the first step. Know if you are ready. Where should you start? Take our survey to know to bring your team up-to-speed with AI and what are some of the low hanging fruits for your first AI project.',
     content_type: 'text',
     page: 'home',
     section: 'cta',
   },
   ai_home_cta_button: {
-    value: 'Get in Touch',
+    value: 'AI Readiness Survey',
     content_type: 'text',
     page: 'home',
     section: 'cta',
