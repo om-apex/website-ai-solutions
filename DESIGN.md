@@ -24,8 +24,8 @@ Marketing website for Om AI Solutions LLC, a subsidiary of Om Apex Holdings. Sho
 |---------|-------|
 | Primary Color | Navy #1E4D7C |
 | Accent Color | Gold #C9A227 |
-| Heading Font | Georgia, serif |
-| Body Font | Segoe UI, system-ui |
+| Heading Font | Playfair Display (700) via next/font/google |
+| Body Font | Space Grotesk (300-700) via next/font/google |
 | Email | hello@omaisolutions.com |
 | Location | Atlanta, Georgia |
 
@@ -41,16 +41,24 @@ src/
 │   │   ├── page.tsx            # Blog index — article card grid (server component)
 │   │   └── [slug]/page.tsx     # Individual article page (SSG via generateStaticParams)
 │   ├── contact/page.tsx        # Contact (server → ContactPageClient)
+│   ├── newsletter/
+│   │   ├── page.tsx            # Newsletter signup (server → NewsletterClient)
+│   │   └── NewsletterClient.tsx # Email + name capture form
+│   ├── ai-readiness-survey/
+│   │   ├── page.tsx            # Survey placeholder (server → SurveyInterestClient)
+│   │   └── SurveyInterestClient.tsx # Email capture ("notify when ready")
 │   └── api/
 │       ├── auth/callback/route.ts  # OAuth callback (Google → @omapex.com validation)
-│       └── contact/route.ts    # Contact form POST (→ Supabase leads + HubSpot)
+│       ├── contact/route.ts    # Contact form POST (→ Supabase leads + HubSpot)
+│       ├── newsletter/route.ts # Newsletter signup POST (→ Supabase leads + HubSpot, tag: newsletter_ai)
+│       └── survey-interest/route.ts # Survey interest POST (→ Supabase leads + HubSpot, tag: survey_interest_ai)
 ├── components/
 │   ├── ContactForm.tsx          # Contact form (tabbed: Demo Request / General)
 │   ├── brand/Logo.tsx          # Logo component (SVG + optional text)
 │   ├── content/EditableText.tsx # CMS inline editing (EditableText, EditableList, EditableStat)
 │   ├── layout/
-│   │   ├── Header.tsx          # Sticky header with nav + CTA
-│   │   └── Footer.tsx          # 4-column footer (Company, Products, Links, Contact)
+│   │   ├── Header.tsx          # Sticky header with nav + "AI Readiness Survey" CTA button
+│   │   └── Footer.tsx          # Minimal 3-line footer (copyright, contact, subsidiary attribution)
 │   ├── pages/
 │   │   ├── HomePageClient.tsx  # Home page client component
 │   │   ├── AboutPageClient.tsx # About page client component
@@ -113,7 +121,7 @@ Server page.tsx
 - Hero: tagline, heading, description, 2 CTAs
 - Products: 4 product cards (AI Quorum, Yard Shack, Floor Assistant, Voice & Vision Picking)
 - Features: "Why Om AI Solutions?" + 6 feature bullets + stats box
-- CTA: closing call to action
+- CTA: "Ready to start your AI journey" — dark rounded-3xl card with "AI Readiness Survey" button → `/ai-readiness-survey`
 
 ### About
 - Hero: heading, description
@@ -130,6 +138,16 @@ Server page.tsx
   - Rate limited: 5 per IP per 10 minutes
 - Direct Contact: Email + Location + Phone (if set)
 - Parent Company: link to Om Apex Holdings
+
+### Newsletter (/newsletter)
+- Email + optional name signup form
+- Submits to /api/newsletter → Supabase leads table + HubSpot CRM (tag: `newsletter_ai`)
+- Success/error states displayed inline
+
+### AI Readiness Survey (/ai-readiness-survey)
+- Placeholder page — survey to be developed separately
+- Email capture: "Leave your email — we'll notify you when the survey is ready"
+- Submits to /api/survey-interest → Supabase leads table + HubSpot CRM (tag: `survey_interest_ai`)
 
 ### Blog
 - Index: `/blog` — responsive card grid (1/2/3 col) showing published articles ascending by part number
