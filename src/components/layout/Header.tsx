@@ -12,6 +12,7 @@ const navLinks = [
   { href: '/about', label: 'About' },
   { href: '/blog', label: 'Blog' },
   { href: '/contact', label: 'Contact' },
+  { href: '/newsletter', label: 'Newsletter' },
 ]
 
 export function Header() {
@@ -41,7 +42,7 @@ export function Header() {
               </Link>
             ))}
             <Button asChild className="bg-brand-primary hover:bg-brand-primary-dark">
-              <Link href="/contact">Request Demo</Link>
+              <Link href="/ai-readiness-survey">AI Readiness Survey</Link>
             </Button>
           </nav>
 
@@ -73,7 +74,7 @@ export function Header() {
                 </Link>
               ))}
               <Button asChild className="bg-brand-primary hover:bg-brand-primary-dark w-full">
-                <Link href="/contact">Request Demo</Link>
+                <Link href="/ai-readiness-survey">AI Readiness Survey</Link>
               </Button>
             </nav>
           </div>
