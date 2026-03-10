@@ -51,12 +51,14 @@ function HomeContent() {
             <div className="flex flex-col sm:flex-row gap-4">
               <Button asChild size="lg" className="bg-brand-primary hover:bg-brand-primary-dark text-white">
                 <Link href="#products">
-                  {getContent('ai_home_hero_cta_primary', 'Explore Products')}
+                  <EditableText contentKey="ai_home_hero_cta_primary" as="span" fallback="Explore Products" />
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
               <Button asChild size="lg" variant="outline" className="border-gray-600 text-white hover:bg-gray-800">
-                <Link href="/contact">{getContent('ai_home_hero_cta_secondary', 'Request Demo')}</Link>
+                <Link href="/contact">
+                  <EditableText contentKey="ai_home_hero_cta_secondary" as="span" fallback="Request Demo" />
+                </Link>
               </Button>
             </div>
           </div>
