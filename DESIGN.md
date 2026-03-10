@@ -12,6 +12,7 @@ Marketing website for Om AI Solutions LLC, a subsidiary of Om Apex Holdings. Sho
 | Language | TypeScript 5, React 19 |
 | Styling | Tailwind CSS v4 |
 | UI Components | shadcn/ui (Button, Card, Input, Textarea, Label) |
+| Markdown | react-markdown + remark-gfm |
 | Database | Supabase (shared Owner Portal project: `hympgocuivzxzxllgmcy`) |
 | Icons | Lucide React |
 | Deployment | Vercel |
@@ -36,6 +37,9 @@ src/
 │   ├── layout.tsx              # Root layout (Header + Footer + EditModeProvider)
 │   ├── page.tsx                # Home (server → HomePageClient)
 │   ├── about/page.tsx          # About (server → AboutPageClient)
+│   ├── blog/
+│   │   ├── page.tsx            # Blog index — article card grid (server component)
+│   │   └── [slug]/page.tsx     # Individual article page (SSG via generateStaticParams)
 │   ├── contact/page.tsx        # Contact (server → ContactPageClient)
 │   └── api/
 │       └── contact/route.ts    # Contact form POST (→ Supabase leads + HubSpot)
@@ -59,7 +63,12 @@ src/
 ├── contexts/
 │   ├── ContentContext.tsx       # CMS content state provider
 │   └── EditModeContext.tsx      # Edit mode + auth
+├── content/
+│   └── blog/
+│       ├── index.ts            # Article metadata array + helper functions
+│       └── *.md                # 10 article markdown files with YAML frontmatter
 └── lib/
+    ├── blog.ts                 # Blog content loader (markdown reading + callout preprocessing)
     ├── brand.ts                # Brand config (colors, fonts, company info)
     ├── content.ts              # DEFAULT_CONTENT (~60 keys, ai_ prefix)
     ├── content-fetcher.ts      # Server-side Supabase content fetch
@@ -113,6 +122,15 @@ Uses simplified EditableText (modal overlay instead of shadcn Popover).
   - Rate limited: 5 per IP per 10 minutes
 - Direct Contact: Email + Location + Phone (if set)
 - Parent Company: link to Om Apex Holdings
+
+### Blog
+- Index: `/blog` — responsive card grid (1/2/3 col) showing published articles ascending by part number
+- Articles: `/blog/[slug]` — SSG pages with header image, blue rule, markdown body, teal callout blocks, prev/next nav
+- Content: 10-part "AI in Supply Chain" series, articles 1-6 published, 7-10 draft
+- Content files: `src/content/blog/ai-in-supply-chain-N-of-10.md` with YAML frontmatter
+- Header images: `public/blog/headers/header-N.png`
+- Callout blocks: `:::callout-next-up` and `:::callout-question` markers pre-processed to HTML divs, styled with teal accent
+- Adding articles: drop new `.md` file + update `src/content/blog/index.ts` metadata array, redeploy
 
 ## Deployment
 
