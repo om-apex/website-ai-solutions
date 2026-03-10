@@ -42,6 +42,7 @@ src/
 │   │   └── [slug]/page.tsx     # Individual article page (SSG via generateStaticParams)
 │   ├── contact/page.tsx        # Contact (server → ContactPageClient)
 │   └── api/
+│       ├── auth/callback/route.ts  # OAuth callback (Google → @omapex.com validation)
 │       └── contact/route.ts    # Contact form POST (→ Supabase leads + HubSpot)
 ├── components/
 │   ├── ContactForm.tsx          # Contact form (tabbed: Demo Request / General)
@@ -62,7 +63,7 @@ src/
 │       └── label.tsx           # Label component
 ├── contexts/
 │   ├── ContentContext.tsx       # CMS content state provider
-│   └── EditModeContext.tsx      # Edit mode + auth
+│   └── EditModeContext.tsx      # Edit mode + auth + login prompt + keyboard shortcut
 ├── content/
 │   └── blog/
 │       ├── index.ts            # Article metadata array + helper functions
@@ -73,7 +74,9 @@ src/
     ├── content.ts              # DEFAULT_CONTENT (~60 keys, ai_ prefix)
     ├── content-fetcher.ts      # Server-side Supabase content fetch
     ├── hubspot.ts              # HubSpot v3 API helper (contacts + deals)
-    ├── supabase.ts             # Supabase client helper
+    ├── supabase/
+    │   ├── client.ts           # SSR-aware browser client (@supabase/ssr)
+    │   └── server.ts           # Server client with cookie handling
     └── utils.ts                # cn() utility
 ```
 
@@ -96,8 +99,13 @@ Server page.tsx
 ```
 
 ### Edit Mode
-Same as apex: `?editMode=true` URL param + @omapex.com Supabase auth.
-Uses simplified EditableText (modal overlay instead of shadcn Popover).
+- Activated by `?editMode=true` URL parameter or `Cmd+Shift+E` / `Ctrl+Shift+E` keyboard shortcut
+- Requires Google OAuth with @omapex.com Supabase auth (SSR-aware client via `@supabase/ssr`)
+- If not authenticated, a floating "Sign in to edit" banner appears at top of page
+- After OAuth login, user is redirected back to same page with editMode active
+- Gold dashed outlines on editable fields, pencil icon on hover
+- Click-to-edit modal saves to Supabase
+- Middleware refreshes auth sessions on every request (no route protection — site stays public)
 
 ## Pages
 
