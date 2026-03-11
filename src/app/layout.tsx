@@ -49,6 +49,9 @@ export default async function RootLayout({
 
   return (
     <html lang="en" className={`${playfairDisplay.variable} ${spaceGrotesk.variable}`}>
+      <head>
+        <link rel="alternate" type="application/rss+xml" title="Om AI Solutions Blog" href="/blog/rss.xml" />
+      </head>
       <body className="antialiased">
         <EditModeProvider>
           <div className="flex min-h-screen flex-col">

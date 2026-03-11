@@ -1,28 +1,49 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { notFound } from 'next/navigation';
 import { getPublishedArticles, getAllCategories } from '@/lib/blog';
-import { getSearchIndex } from '@/lib/search-index';
-import { paginateArticles, categorySlug } from '@/lib/blog-utils';
+import { paginateArticles, ARTICLES_PER_PAGE, categorySlug } from '@/lib/blog-utils';
 import BlogGrid from '@/components/blog/BlogGrid';
 import Pagination from '@/components/blog/Pagination';
-import SearchDialog from '@/components/blog/SearchDialog';
 
-export const metadata: Metadata = {
-  title: 'Blog | Om AI Solutions',
-  description:
-    'Insights on AI-powered solutions for modern business operations.',
-  openGraph: {
-    title: 'Blog | Om AI Solutions',
+interface PageProps {
+  params: Promise<{ page: string }>;
+}
+
+export async function generateStaticParams() {
+  const articles = getPublishedArticles();
+  const totalPages = Math.ceil(articles.length / ARTICLES_PER_PAGE);
+
+  // Page 1 is handled by /blog, so start from 2
+  return Array.from({ length: Math.max(0, totalPages - 1) }, (_, i) => ({
+    page: String(i + 2),
+  }));
+}
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { page } = await params;
+  return {
+    title: `Blog — Page ${page} | Om AI Solutions`,
     description:
-      'Insights on AI-powered solutions for modern business operations.',
-  },
-};
+      'Insights on supply chain strategy, AI in logistics, warehouse optimization, and digital transformation.',
+  };
+}
 
-export default function BlogPage() {
+export default async function BlogPaginatedPage({ params }: PageProps) {
+  const { page: pageStr } = await params;
+  const pageNum = parseInt(pageStr, 10);
+
+  if (isNaN(pageNum) || pageNum < 2) {
+    notFound();
+  }
+
   const articles = getPublishedArticles();
   const categories = getAllCategories();
-  const searchIndex = getSearchIndex();
-  const { items, totalPages, currentPage } = paginateArticles(articles, 1);
+  const { items, totalPages, currentPage } = paginateArticles(articles, pageNum);
+
+  if (currentPage !== pageNum || items.length === 0) {
+    notFound();
+  }
 
   return (
     <main className="container mx-auto px-4 py-12">
@@ -31,11 +52,8 @@ export default function BlogPage() {
           Blog
         </h1>
         <p className="text-lg text-gray-600">
-          Insights on AI-powered solutions for modern business operations.
+          Insights on supply chain strategy, AI, and warehouse optimization.
         </p>
-        <div className="mt-4 flex justify-center">
-          <SearchDialog searchIndex={searchIndex} />
-        </div>
       </div>
 
       {categories.length > 1 && (

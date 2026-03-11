@@ -35,12 +35,18 @@ Marketing website for Om AI Solutions LLC, a subsidiary of Om Apex Holdings. Sho
 ```
 src/
 ├── app/
-│   ├── layout.tsx              # Root layout (Header + Footer + EditModeProvider)
+│   ├── layout.tsx              # Root layout (Header + Footer + EditModeProvider + RSS link)
+│   ├── sitemap.ts              # Dynamic sitemap (blog, categories, series, static pages)
 │   ├── page.tsx                # Home (server → HomePageClient)
 │   ├── about/page.tsx          # About (server → AboutPageClient)
 │   ├── blog/
-│   │   ├── page.tsx            # Blog index — article card grid (server component)
-│   │   └── [slug]/page.tsx     # Individual article page (SSG via generateStaticParams)
+│   │   ├── page.tsx            # Blog index — paginated card grid with category chips
+│   │   ├── [slug]/page.tsx     # Individual article page (SSG via generateStaticParams)
+│   │   ├── page/[page]/page.tsx          # Paginated blog listing (page 2+)
+│   │   ├── category/[category]/page.tsx  # Category listing page
+│   │   ├── category/[category]/page/[page]/page.tsx  # Paginated category listing
+│   │   ├── series/[series-slug]/page.tsx # Series listing page (ordered by part)
+│   │   └── rss.xml/route.ts     # RSS 2.0 feed (dynamic)
 │   ├── contact/page.tsx        # Contact (server → ContactPageClient)
 │   ├── newsletter/
 │   │   ├── page.tsx            # Newsletter signup (server → NewsletterClient)
@@ -65,6 +71,10 @@ src/
 │   │   ├── HomePageClient.tsx  # Home page client component
 │   │   ├── AboutPageClient.tsx # About page client component
 │   │   └── ContactPageClient.tsx # Contact page (tabbed form + direct contact)
+│   ├── blog/
+│   │   ├── BlogGrid.tsx       # Reusable article card grid
+│   │   ├── Pagination.tsx     # Shared pagination with ellipsis truncation
+│   │   └── SearchDialog.tsx   # Client-side fuzzy search (Fuse.js, Cmd+K)
 │   └── ui/
 │       ├── button.tsx          # Radix Button + CVA variants
 │       ├── card.tsx            # Card component system
@@ -76,10 +86,13 @@ src/
 │   └── EditModeContext.tsx      # Edit mode + auth + login prompt + keyboard shortcut
 ├── content/
 │   └── blog/
-│       ├── index.ts            # Article metadata array + helper functions
-│       └── *.md                # 10 article markdown files with YAML frontmatter
+│       └── *.md                # Markdown articles with YAML frontmatter (auto-discovered)
+├── types/
+│   └── blog.ts                # Article, ArticleSeries, LegacyFrontmatter interfaces
 └── lib/
-    ├── blog.ts                 # Blog content loader (markdown reading + callout preprocessing)
+    ├── blog.ts                 # Blog auto-discovery loader (gray-matter + callout preprocessing)
+    ├── blog-utils.ts            # Pagination helper + category slug utilities
+    ├── search-index.ts          # Build-time search index for Fuse.js
     ├── brand.ts                # Brand config (colors, fonts, company info)
     ├── content.ts              # DEFAULT_CONTENT (~60 keys, ai_ prefix)
     ├── content-fetcher.ts      # Server-side Supabase content fetch
@@ -154,13 +167,20 @@ Server page.tsx
 - Submits to /api/survey-interest → Supabase leads table + HubSpot CRM (tag: `survey_interest_ai`)
 
 ### Blog
-- Index: `/blog` — responsive card grid (1/2/3 col) showing published articles ascending by part number
-- Articles: `/blog/[slug]` — SSG pages with header image, blue rule, markdown body, teal callout blocks, prev/next nav
-- Content: 10-part "AI in Supply Chain" series, articles 1-6 published, 7-10 draft
-- Content files: `src/content/blog/ai-in-supply-chain-N-of-10.md` with YAML frontmatter
-- Header images: `public/blog/headers/header-N.png`
-- Callout blocks: `:::callout-next-up` and `:::callout-question` markers pre-processed to HTML divs, styled with teal accent
-- Adding articles: drop new `.md` file + update `src/content/blog/index.ts` metadata array, redeploy
+- Index: `/blog` — paginated card grid (12/page) with category filter chips, sorted by date
+- Pagination: `/blog/page/[page]` — pages 2+ for main listing
+- Categories: `/blog/category/[category]` — articles filtered by category, paginated
+- Series: `/blog/series/[series-slug]` — sequential reading order by part number
+- Articles: `/blog/[slug]` — SSG pages with header image, author/date/reading time, markdown body, callout blocks, prev/next nav
+- Content files: `src/content/blog/*.md` with extended YAML frontmatter (auto-discovered at build time via `gray-matter`)
+- Extended frontmatter: `title`, `date`, `author`, `excerpt`, `category`, `tags[]`, `series` (name/part/total), `published`, `headerImage`
+- Reading time: calculated at build time from word count (~200 wpm)
+- Adding articles: drop new `.md` file in `src/content/blog/`, redeploy — no registry editing needed
+- Backward compat: legacy frontmatter format (`part`, `seriesTotal`, `seriesTitle`, `subtitle`) auto-mapped to new interface
+- Shared components: `BlogGrid` (reusable card grid), `Pagination` (page numbers with ellipsis), `SearchDialog` (Fuse.js fuzzy search, Cmd+K)
+- RSS: `/blog/rss.xml` — RSS 2.0 feed with all published articles
+- Sitemap: `/sitemap.xml` — includes all blog, category, series, and static pages
+- Search: client-side fuzzy search via Fuse.js (~6KB), triggered by search button or Cmd+K
 
 ## Deployment
 
