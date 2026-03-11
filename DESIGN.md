@@ -50,6 +50,7 @@ src/
 │   │   └── SurveyInterestClient.tsx # Email capture ("notify when ready")
 │   └── api/
 │       ├── auth/callback/route.ts  # OAuth callback (Google → @omapex.com validation)
+│       ├── cms/redeploy/route.ts   # CMS publish — triggers Vercel deploy hook
 │       ├── contact/route.ts    # Contact form POST (→ Supabase leads + HubSpot)
 │       ├── newsletter/route.ts # Newsletter signup POST (→ Supabase leads + HubSpot, tag: newsletter_ai)
 │       └── survey-interest/route.ts # Survey interest POST (→ Supabase leads + HubSpot, tag: survey_interest_ai)
@@ -114,6 +115,8 @@ Server page.tsx
 - After OAuth login, user is redirected back to same page with editMode active
 - Gold dashed outlines on editable fields, pencil icon on hover
 - Click-to-edit modal saves to Supabase
+- Floating "Publish Changes" button (bottom-right) triggers Vercel redeploy via `/api/cms/redeploy`
+- Shows loading, success ("Live in ~60s"), and error states
 - Middleware refreshes auth sessions on every request (no route protection — site stays public)
 
 ## Pages
@@ -164,4 +167,4 @@ Server page.tsx
 - **Platform**: Vercel
 - **Domain**: omaisolutions.com (when DNS configured)
 - **Build**: `next build`
-- **Environment**: `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, `HUBSPOT_API_KEY_OMAPEX`
+- **Environment**: `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, `HUBSPOT_API_KEY_OMAPEX`, `VERCEL_DEPLOY_HOOK_URL`
