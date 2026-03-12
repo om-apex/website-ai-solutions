@@ -22,7 +22,7 @@ export function Footer({ content = {} }: FooterProps) {
 
   return (
     <footer className="border-t bg-gray-50">
-      <div className="container mx-auto px-4 py-8 text-center">
+      <div className="container mx-auto px-4 py-4 text-center">
         <p className="text-xs text-gray-400">
           &copy; {new Date().getFullYear()} Om AI Solutions LLC. All rights reserved.
         </p>
