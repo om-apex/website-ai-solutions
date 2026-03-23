@@ -20,6 +20,8 @@ import { Footer } from "@/components/layout/Footer"
 import { EditModeProvider } from "@/contexts/EditModeContext"
 import { getSiteContent, getCompanyContact } from "@/lib/content-fetcher"
 import { DEFAULT_CONTENT } from "@/lib/content"
+import { Analytics } from '@vercel/analytics/react'
+import { SpeedInsights } from '@vercel/speed-insights/next'
 
 export const metadata: Metadata = {
   title: {
@@ -60,6 +62,8 @@ export default async function RootLayout({
             <Footer content={footerContent} />
           </div>
         </EditModeProvider>
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   )
