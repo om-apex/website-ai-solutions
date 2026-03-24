@@ -1,9 +1,22 @@
 /**
  * Brand constants for Om AI Solutions
  *
- * This file defines the brand identity including colors, fonts, and company info.
- * Colors are defined in both hex (for reference) and OkLCH (for Tailwind v4).
+ * Hardcoded values serve as BUILD-TIME FALLBACKS. At runtime/ISR, the root layout
+ * fetches from company_configs in Supabase and injects CSS custom properties.
+ * To update brand: edit company config in Owner Portal → Dashboard → Company Config.
  */
+import { getBrandFromConfig, type DynamicBrand } from './content-fetcher'
+
+const COMPANY_CONFIG_SLUG = 'om-ai-solutions'
+
+/** Fetch brand from Supabase company_configs. Returns null if unavailable. */
+export async function fetchBrand(): Promise<DynamicBrand | null> {
+  try {
+    return await getBrandFromConfig(COMPANY_CONFIG_SLUG)
+  } catch {
+    return null
+  }
+}
 
 export interface BrandColors {
   primary: string        // Main brand color

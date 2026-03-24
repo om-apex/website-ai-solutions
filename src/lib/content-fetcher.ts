@@ -51,6 +51,49 @@ export async function getSiteContent(
   return content
 }
 
+export interface DynamicBrand {
+  companyName: string
+  shortName: string
+  tagline: string
+  email: string
+  phone: string
+  website: string
+  primaryColor: string
+  accentColor: string
+  headingFont: string
+  bodyFont: string
+}
+
+export async function getBrandFromConfig(slug: string): Promise<DynamicBrand | null> {
+  const supabase = createClient(supabaseUrl, supabaseAnonKey)
+
+  const { data, error } = await supabase
+    .from('company_configs')
+    .select('config')
+    .eq('id', slug)
+    .single()
+
+  if (error || !data?.config) return null
+
+  const cfg = data.config as Record<string, Record<string, string>>
+  const company = cfg.company || {}
+  const brand = cfg.brand || {}
+  const contact = cfg.contact || {}
+
+  return {
+    companyName: company.name || '',
+    shortName: company.short_name || '',
+    tagline: company.tagline || '',
+    email: contact.email || '',
+    phone: contact.phone || '',
+    website: contact.website || '',
+    primaryColor: brand.primary_color || '',
+    accentColor: brand.accent_color || '',
+    headingFont: brand.heading_font || '',
+    bodyFont: brand.body_font || '',
+  }
+}
+
 export async function getCompanyContact(
   slug: string,
   keyMap: { phone: string; email: string; name: string }
