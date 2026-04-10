@@ -145,14 +145,18 @@ export function EditModeProvider({ children }: { children: ReactNode }) {
     const supabase = supabaseRef.current
     if (!supabase) return
 
-    const redirectPath = typeof window !== 'undefined'
-      ? window.location.pathname + '?editMode=true'
+    const redirectTarget = typeof window !== 'undefined'
+      ? (() => {
+          const url = new URL(window.location.href)
+          url.searchParams.set('editMode', 'true')
+          return url.toString()
+        })()
       : '/?editMode=true'
 
     await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo: `${window.location.origin}/api/auth/callback?redirect=${encodeURIComponent(redirectPath)}`,
+        redirectTo: `${window.location.origin}/api/auth/callback?redirect=${encodeURIComponent(redirectTarget)}`,
         queryParams: {
           hd: 'omapex.com',
         },
