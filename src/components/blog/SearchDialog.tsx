@@ -21,7 +21,7 @@ export default function SearchDialog({ searchIndex }: SearchDialogProps) {
   useEffect(() => {
     fuse.current = new Fuse(searchIndex, {
       threshold: 0.3,
-      keys: ['title', 'excerpt', 'category', 'tags'],
+      keys: ['title', 'excerpt', 'category', 'tags', 'series'],
     });
   }, [searchIndex]);
 
@@ -162,6 +162,11 @@ export default function SearchDialog({ searchIndex }: SearchDialogProps) {
                     {item.title}
                   </p>
                   <div className="flex items-center gap-2 mt-1">
+                    {item.series && (
+                      <span className="rounded-full border border-[#d0deed] bg-white px-2 py-0.5 text-xs text-slate-600">
+                        {item.series}
+                      </span>
+                    )}
                     {item.category !== 'Uncategorized' && (
                       <span className="rounded-full border border-[#d0deed] bg-white px-2 py-0.5 text-xs text-slate-600">
                         {item.category}

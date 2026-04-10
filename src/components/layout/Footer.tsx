@@ -1,5 +1,7 @@
 'use client'
 
+import Link from 'next/link'
+
 interface FooterProps {
   content?: Record<string, string>
 }
@@ -24,8 +26,8 @@ export function Footer({ content = {} }: FooterProps) {
   return (
     <footer className="sticky bottom-0 z-40 shrink-0 border-t border-slate-200 bg-white">
       <div className="container mx-auto px-4 py-3">
-        <div className="flex flex-col gap-2 text-[11px] text-slate-500 md:flex-row md:items-center md:justify-between md:gap-4">
-          <div className="flex min-w-0 flex-wrap items-center gap-x-2.5 gap-y-1 md:flex-nowrap">
+        <div className="grid gap-2 text-[11px] text-slate-500 md:grid-cols-[1fr_auto_1fr] md:items-center md:gap-4">
+          <div className="flex min-w-0 flex-wrap items-center gap-x-2.5 gap-y-1 md:flex-nowrap md:justify-self-start">
             <span className="font-semibold uppercase tracking-[0.22em] text-brand-primary">Om AI Solutions</span>
             <span>{location}</span>
             <a href={`mailto:${email}`} className="transition-colors hover:text-brand-primary">
@@ -34,7 +36,17 @@ export function Footer({ content = {} }: FooterProps) {
             {phone && <span>{formatPhone(phone)}</span>}
           </div>
 
-          <span className="shrink-0 whitespace-nowrap text-slate-400">
+          <div className="flex items-center justify-center gap-3 text-slate-400">
+            <Link href="/privacy-policy" className="transition-colors hover:text-brand-primary">
+              Privacy Policy
+            </Link>
+            <span aria-hidden="true">•</span>
+            <Link href="/terms-of-service" className="transition-colors hover:text-brand-primary">
+              Terms of Service
+            </Link>
+          </div>
+
+          <span className="shrink-0 whitespace-nowrap text-slate-400 md:justify-self-end">
             A subsidiary of &copy; {new Date().getFullYear()} Om Apex Holdings LLC
           </span>
         </div>

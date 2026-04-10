@@ -5,6 +5,7 @@ import { getPublishedArticles, getAllCategories } from '@/lib/blog';
 import { paginateArticles, ARTICLES_PER_PAGE, categorySlug } from '@/lib/blog-utils';
 import BlogGrid from '@/components/blog/BlogGrid';
 import Pagination from '@/components/blog/Pagination';
+import BlogShell from '@/components/blog/BlogShell';
 
 interface PageProps {
   params: Promise<{ page: string }>;
@@ -25,7 +26,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     title: `Blog — Page ${page} | Om AI Solutions`,
     description:
-      'Insights on supply chain strategy, AI in logistics, warehouse optimization, and digital transformation.',
+      'Insights on AI-native software for business and supply chain.',
   };
 }
 
@@ -46,38 +47,39 @@ export default async function BlogPaginatedPage({ params }: PageProps) {
   }
 
   return (
-    <main className="container mx-auto px-4 py-12">
-      <div className="max-w-4xl mx-auto mb-12 text-center">
-        <h1 className="text-4xl md:text-5xl font-bold text-brand-primary mb-4">
-          Blog
-        </h1>
-        <p className="text-lg text-gray-600">
-          Insights on supply chain strategy, AI, and warehouse optimization.
-        </p>
-      </div>
-
-      {categories.length > 1 && (
-        <div className="flex flex-wrap justify-center gap-2 mb-8 max-w-4xl mx-auto">
-          <Link
-            href="/blog"
-            className="px-4 py-1.5 text-sm font-medium rounded-full bg-brand-primary text-white"
-          >
-            All
-          </Link>
-          {categories.map((cat) => (
+    <BlogShell
+      badge={`Insights · Page ${currentPage}`}
+      title="Browse the full AI Solutions journal"
+      description="The same editorial system, just later in the archive."
+      backLink={
+        <Link href="/blog" className="text-sm font-medium text-slate-500 transition-colors hover:text-brand-primary">
+          &larr; Back to the main journal
+        </Link>
+      }
+      preContent={
+        categories.length > 1 ? (
+          <div className="flex flex-wrap gap-2">
             <Link
-              key={cat}
-              href={`/blog/category/${categorySlug(cat)}`}
-              className="px-4 py-1.5 text-sm font-medium rounded-full bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors"
+              href="/blog"
+              className="rounded-full border border-[#234d7a] bg-[#234d7a] px-4 py-1.5 text-sm font-medium text-white shadow-sm"
             >
-              {cat}
+              All
             </Link>
-          ))}
-        </div>
-      )}
-
+            {categories.map((cat) => (
+              <Link
+                key={cat}
+                href={`/blog/category/${categorySlug(cat)}`}
+                className="rounded-full border border-[#c8d9ec] bg-[linear-gradient(180deg,#f7fbff_0%,#e6eff8_100%)] px-4 py-1.5 text-sm font-medium text-[#2d577f] transition-colors hover:border-[#a8c0db] hover:bg-[linear-gradient(180deg,#eef5fc_0%,#dfeaf6_100%)]"
+              >
+                {cat}
+              </Link>
+            ))}
+          </div>
+        ) : null
+      }
+    >
       <BlogGrid articles={items} />
       <Pagination currentPage={currentPage} totalPages={totalPages} basePath="/blog" />
-    </main>
+    </BlogShell>
   );
 }

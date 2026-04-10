@@ -44,16 +44,16 @@ export default function Pagination({ currentPage, totalPages, basePath }: Pagina
   const pages = getPageNumbers(currentPage, totalPages);
 
   return (
-    <nav aria-label="Blog pagination" className="flex items-center justify-center gap-2 mt-12">
+    <nav aria-label="Blog pagination" className="mt-10 flex items-center justify-center gap-2">
       {currentPage > 1 ? (
         <Link
           href={pageHref(basePath, currentPage - 1)}
-          className="px-3 py-2 text-sm font-medium text-slate-600 transition-colors hover:text-brand-primary"
+          className="rounded-full border border-[rgba(30,77,124,0.12)] bg-white/80 px-4 py-2 text-sm font-medium text-slate-600 transition-colors hover:border-brand-primary hover:text-brand-primary"
         >
           Previous
         </Link>
       ) : (
-        <span className="px-3 py-2 text-sm font-medium text-slate-300">
+        <span className="px-4 py-2 text-sm font-medium text-slate-300">
           Previous
         </span>
       )}
@@ -68,7 +68,7 @@ export default function Pagination({ currentPage, totalPages, basePath }: Pagina
           ) : page === currentPage ? (
             <span
               key={page}
-              className="rounded-md bg-brand-primary px-3 py-1 text-sm font-bold text-white shadow-sm"
+              className="rounded-full bg-brand-primary px-3 py-1 text-sm font-bold text-white shadow-sm"
             >
               {page}
             </span>
@@ -76,7 +76,7 @@ export default function Pagination({ currentPage, totalPages, basePath }: Pagina
             <Link
               key={page}
               href={pageHref(basePath, page)}
-              className="rounded-md border border-[#d0deed] bg-[linear-gradient(180deg,#f7fbff_0%,#e9f1fa_100%)] px-3 py-1 text-sm font-medium text-slate-600 transition-colors hover:border-[#b6cde4] hover:text-brand-primary"
+              className="rounded-full border border-[#d0deed] bg-[linear-gradient(180deg,#f7fbff_0%,#e9f1fa_100%)] px-3 py-1 text-sm font-medium text-slate-600 transition-colors hover:border-[#b6cde4] hover:text-brand-primary"
             >
               {page}
             </Link>
@@ -92,12 +92,12 @@ export default function Pagination({ currentPage, totalPages, basePath }: Pagina
       {currentPage < totalPages ? (
         <Link
           href={pageHref(basePath, currentPage + 1)}
-          className="px-3 py-2 text-sm font-medium text-slate-600 transition-colors hover:text-brand-primary"
+          className="rounded-full border border-[rgba(30,77,124,0.12)] bg-white/80 px-4 py-2 text-sm font-medium text-slate-600 transition-colors hover:border-brand-primary hover:text-brand-primary"
         >
           Next
         </Link>
       ) : (
-        <span className="px-3 py-2 text-sm font-medium text-slate-300">
+        <span className="px-4 py-2 text-sm font-medium text-slate-300">
           Next
         </span>
       )}

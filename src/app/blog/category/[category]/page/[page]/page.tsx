@@ -10,6 +10,7 @@ import {
 } from '@/lib/blog-utils';
 import BlogGrid from '@/components/blog/BlogGrid';
 import Pagination from '@/components/blog/Pagination';
+import BlogShell from '@/components/blog/BlogShell';
 
 interface PageProps {
   params: Promise<{ category: string; page: string }>;
@@ -67,25 +68,48 @@ export default async function CategoryPaginatedPage({ params }: PageProps) {
   }
 
   return (
-    <main className="container mx-auto px-4 py-12">
-      <div className="max-w-4xl mx-auto mb-12 text-center">
-        <Link href="/blog" className="text-sm text-gray-500 hover:text-brand-primary transition-colors mb-4 inline-block">
-          &larr; All Articles
+    <BlogShell
+      badge={`Topic · Page ${currentPage}`}
+      title={name}
+      description={`${allArticles.length} article${allArticles.length !== 1 ? 's' : ''} filed under this subject.`}
+      backLink={
+        <Link href={`/blog/category/${slug}`} className="text-sm font-medium text-slate-500 transition-colors hover:text-brand-primary">
+          &larr; Back to {name}
         </Link>
-        <h1 className="text-4xl md:text-5xl font-bold text-brand-primary mb-2">
-          {name}
-        </h1>
-        <p className="text-lg text-gray-600">
-          {allArticles.length} article{allArticles.length !== 1 ? 's' : ''}
-        </p>
-      </div>
+      }
+      preContent={
+        <div className="flex flex-wrap gap-2">
+          <Link
+            href="/blog"
+            className="rounded-full border border-[#c8d9ec] bg-[linear-gradient(180deg,#f7fbff_0%,#e6eff8_100%)] px-4 py-1.5 text-sm font-medium text-[#2d577f] transition-colors hover:border-[#a8c0db] hover:bg-[linear-gradient(180deg,#eef5fc_0%,#dfeaf6_100%)]"
+          >
+            All
+          </Link>
+          {categories.map((category) => {
+            const href = `/blog/category/${categorySlug(category)}`;
+            const active = category === name;
 
+            return (
+              <Link
+                key={category}
+                href={href}
+                className={active
+                  ? 'rounded-full border border-[#234d7a] bg-[#234d7a] px-4 py-1.5 text-sm font-medium text-white shadow-sm'
+                  : 'rounded-full border border-[#c8d9ec] bg-[linear-gradient(180deg,#f7fbff_0%,#e6eff8_100%)] px-4 py-1.5 text-sm font-medium text-[#2d577f] transition-colors hover:border-[#a8c0db] hover:bg-[linear-gradient(180deg,#eef5fc_0%,#dfeaf6_100%)]'}
+              >
+                {category}
+              </Link>
+            );
+          })}
+        </div>
+      }
+    >
       <BlogGrid articles={items} showCategoryChips={false} />
       <Pagination
         currentPage={currentPage}
         totalPages={totalPages}
         basePath={`/blog/category/${slug}`}
       />
-    </main>
+    </BlogShell>
   );
 }
