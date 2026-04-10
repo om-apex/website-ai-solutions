@@ -26,7 +26,7 @@ function ContactContent() {
 
   const email = getContent('ai_global_contact_email', 'hello@omaisolutions.com')
   const phone = getContent('ai_global_contact_phone', '')
-  const location = getContent('ai_global_contact_location', 'Atlanta, Georgia')
+  const location = getContent('ai_global_contact_location', 'Roswell, GA')
 
   return (
     <div>

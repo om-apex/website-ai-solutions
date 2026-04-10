@@ -1,11 +1,5 @@
 'use client'
 
-import {
-  Mail,
-  MapPin,
-  Phone,
-} from 'lucide-react'
-
 interface FooterProps {
   content?: Record<string, string>
 }
@@ -24,38 +18,24 @@ function formatPhone(raw: string): string {
 export function Footer({ content = {} }: FooterProps) {
   const email = content['ai_global_contact_email'] || 'info@omaisolutions.com'
   const phone = content['ai_global_contact_phone'] || ''
-  const location = content['ai_global_contact_location'] || 'Atlanta, Georgia'
-  const copyright = content['ai_global_copyright'] || 'Om AI Solutions LLC. All rights reserved.'
+  const rawLocation = content['ai_global_contact_location']?.trim() || ''
+  const location = !rawLocation || /atlanta/i.test(rawLocation) ? 'Roswell, GA' : rawLocation
 
   return (
-    <footer className="sticky bottom-0 z-40 shrink-0 border-t border-[#c8d8e9]/90 bg-[linear-gradient(135deg,rgba(237,244,251,0.96)_0%,rgba(222,235,247,0.96)_54%,rgba(212,228,243,0.96)_100%)] backdrop-blur-xl supports-[backdrop-filter]:bg-[rgba(229,240,249,0.88)]">
-      <div className="container mx-auto px-4 py-2.5">
-        <div className="flex flex-col gap-1 text-[11px] text-slate-600">
-          <div className="flex flex-col gap-1.5 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
-            <span className="text-slate-500">
-              &copy; {new Date().getFullYear()} {copyright}
-            </span>
-
-            <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
-              <span className="inline-flex items-center gap-1.5">
-                <MapPin className="h-3.5 w-3.5 text-brand-primary" />
-                {location}
-              </span>
-              <a href={`mailto:${email}`} className="inline-flex items-center gap-1.5 transition-colors hover:text-brand-primary">
-                <Mail className="h-3.5 w-3.5 text-brand-primary" />
-                {email}
-              </a>
-              {phone && (
-                <a href={`tel:${phone}`} className="inline-flex items-center gap-1.5 transition-colors hover:text-brand-primary">
-                  <Phone className="h-3.5 w-3.5 text-brand-primary" />
-                  {formatPhone(phone)}
-                </a>
-              )}
-            </div>
+    <footer className="sticky bottom-0 z-40 shrink-0 border-t border-slate-200 bg-white">
+      <div className="container mx-auto px-4 py-3">
+        <div className="flex flex-col gap-2 text-[11px] text-slate-500 md:flex-row md:items-center md:justify-between md:gap-4">
+          <div className="flex min-w-0 flex-wrap items-center gap-x-2.5 gap-y-1 md:flex-nowrap">
+            <span className="font-semibold uppercase tracking-[0.22em] text-brand-primary">Om AI Solutions</span>
+            <span>{location}</span>
+            <a href={`mailto:${email}`} className="transition-colors hover:text-brand-primary">
+              {email}
+            </a>
+            {phone && <span>{formatPhone(phone)}</span>}
           </div>
 
-          <span className="text-slate-500">
-            A subsidiary of Om Apex Holdings LLC
+          <span className="shrink-0 whitespace-nowrap text-slate-400">
+            A subsidiary of &copy; {new Date().getFullYear()} Om Apex Holdings LLC
           </span>
         </div>
       </div>

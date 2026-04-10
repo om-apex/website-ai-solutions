@@ -42,12 +42,12 @@ function SectionBadge({
   return (
     <div
       className={cn(
-        'inline-flex items-center gap-2 self-start rounded-full border border-[#b9cae0] bg-[linear-gradient(180deg,rgba(219,231,244,0.96)_0%,rgba(203,220,239,0.9)_100%)] px-4 py-1.5 text-[11px] font-medium tracking-[0.02em] text-[#234d7a] shadow-sm',
+        'inline-flex max-w-full items-center gap-2 self-start rounded-full border border-[#b9cae0] bg-[linear-gradient(180deg,rgba(219,231,244,0.96)_0%,rgba(203,220,239,0.9)_100%)] px-3.5 py-1.5 text-[10px] font-medium tracking-[0.02em] text-[#234d7a] shadow-sm sm:px-4 sm:text-[11px]',
         className
       )}
     >
-      <span className="h-2 w-2 rounded-full bg-[#234d7a]" />
-      <EditableText contentKey={contentKey} as="span" fallback={fallback} />
+      <span className="h-2 w-2 flex-shrink-0 rounded-full bg-[#234d7a]" />
+      <EditableText contentKey={contentKey} as="span" className="min-w-0 break-words leading-tight" fallback={fallback} />
     </div>
   )
 }
@@ -119,7 +119,7 @@ function HomePanel() {
 
   return (
     <div className="flex h-full items-center justify-center">
-      <InteractiveImageAccordion items={accordionItems} defaultActiveId="quorum" className="w-full max-w-[780px]" />
+      <InteractiveImageAccordion items={accordionItems} defaultActiveId="quorum" className="w-full max-w-[820px]" />
     </div>
   )
 }
@@ -133,7 +133,7 @@ function AboutPanel() {
           contentKey="ai_home_shell_about_title_v2"
           as="h2"
           className="mt-3 max-w-3xl text-[1.72rem] font-semibold leading-tight text-slate-950 xl:text-[1.9rem]"
-          fallback="A founder-led AI company with a practical operating point of view"
+          fallback="An AI company with practical business and supply chain expertise"
         />
         <EditableText
           contentKey="ai_home_shell_about_description_v2"
@@ -145,11 +145,11 @@ function AboutPanel() {
 
       <div className="grid min-h-0 flex-1 gap-3 lg:grid-cols-[0.88fr_1.12fr]">
         <div className="rounded-[1.6rem] border border-[#c4d6ea] bg-[linear-gradient(180deg,#f7fbff_0%,#e9f1fa_100%)] p-4 shadow-[0_12px_36px_rgba(15,23,42,0.05)]">
-          <p className="text-xs font-semibold uppercase tracking-[0.24em] text-brand-primary">What this should signal</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.24em] text-brand-primary">What This Company Stands For</p>
           <EditableList
             contentKey="ai_home_shell_about_list_v2"
             className="mt-4 grid gap-3"
-            fallback="AI Quorum leads the public story today|Assessment tools help teams start from a practical baseline|Supply chain remains the deeper long-term product direction|The company is early-stage but grounded in operator experience"
+            fallback="AI Quorum leads the public story today|Assessment tools help teams start from a practical baseline|Supply chain remains the deeper long-term product direction|The company is early-stage but grounded in industry expertise"
             renderItem={(item, index) => (
               <li
                 key={index}
@@ -167,27 +167,27 @@ function AboutPanel() {
             <div className="flex h-10 w-10 items-center justify-center rounded-2xl border border-[#b9cae0] bg-[linear-gradient(180deg,#edf4fb_0%,#dce8f5_100%)] text-[#234d7a]">
               <Users className="h-4 w-4" />
             </div>
-            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-brand-primary">Founder signal</p>
+            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-brand-primary">Leadership</p>
           </div>
 
           <EditableText
             contentKey="ai_home_founder_title"
             as="h3"
             className="mt-4 text-[1.34rem] font-semibold leading-tight text-slate-950 xl:text-[1.46rem]"
-            fallback="Built by operators who know where AI can actually earn trust"
+            fallback="Built by industry experts who know where AI can actually earn trust"
           />
           <EditableText
             contentKey="ai_home_founder_description"
             as="p"
             className="mt-2 text-sm leading-6 text-slate-600"
-            fallback="This company is early, but the experience behind it is not. It is being built by a Husband and Wife team with decades of software experience and deep supply chain operating context."
+            fallback="This company is early, but the experience behind it is not. It is being built by Industry Experts with decades of software experience and deep supply chain operating context."
           />
 
           <div className="mt-4 grid gap-2 sm:grid-cols-3">
             <div className="rounded-[1rem] border border-[#d7e3f0] bg-[linear-gradient(180deg,#f7faff_0%,#edf4fb_100%)] px-3 py-2 text-[#234d7a] shadow-[0_12px_26px_rgba(35,77,122,0.07)]">
               <EditableStat
                 contentKey="ai_home_proof_stat_1"
-                fallback="55+|Combined software years"
+                fallback="60+|Combined software years"
                 valueClassName="text-[1.5rem] font-semibold"
                 labelClassName="mt-0.5 text-[10px] text-[#4b678c]"
               />
@@ -268,51 +268,54 @@ function HomeContent() {
       <section className="relative flex min-h-0 flex-1 items-center overflow-hidden bg-[linear-gradient(135deg,#edf4fb_0%,#deebf7_54%,#d4e4f3_100%)]">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_14%_18%,rgba(30,77,124,0.14),transparent_24%),radial-gradient(circle_at_84%_16%,rgba(111,148,186,0.2),transparent_26%),linear-gradient(180deg,rgba(255,255,255,0.16)_0%,rgba(255,255,255,0.42)_100%)]" />
         <div className="container relative mx-auto flex h-full min-h-0 items-center px-4 py-4">
-          <div className="grid w-full gap-5 lg:grid-cols-[0.78fr_1.22fr] lg:items-center">
-            <div className="flex h-full flex-col justify-center gap-7 self-center rounded-[2rem] border border-[#c4d6ea] bg-[linear-gradient(180deg,rgba(247,251,255,0.92)_0%,rgba(231,240,249,0.9)_100%)] px-5 py-4 shadow-[0_18px_60px_rgba(15,23,42,0.06)] backdrop-blur md:px-6 lg:h-[480px]">
-              <SectionBadge
-                contentKey="ai_home_launch_badge"
-                fallback="Founder-led AI software for operators, analysts, and decision makers"
-              />
+          <div className="grid w-full gap-5 xl:grid-cols-[0.72fr_1.28fr] xl:items-stretch">
+            <div className="min-w-0 max-w-[430px] xl:max-w-none flex h-full flex-col self-center rounded-[2rem] border border-[#c4d6ea] bg-[linear-gradient(180deg,rgba(247,251,255,0.92)_0%,rgba(231,240,249,0.9)_100%)] px-5 py-4 shadow-[0_18px_60px_rgba(15,23,42,0.06)] backdrop-blur md:px-6 xl:h-[540px]">
+              <div className="flex h-full flex-col gap-7">
+                <SectionBadge
+                  contentKey="ai_home_launch_badge"
+                  fallback="AI software for business leaders, analysts, and decision makers"
+                />
 
-              <div className="space-y-3">
-                <h1 className="max-w-xl text-[1.62rem] font-semibold leading-tight tracking-[-0.03em] text-slate-950 md:text-[1.8rem] xl:text-[2rem]">
-                  <EditableText
-                    contentKey="ai_home_launch_title_prefix"
-                    as="span"
-                    fallback="AI products shaped by"
-                  />
-                  <span className="mt-1 block text-brand-primary">
+                <div className="space-y-3">
+                  <h1 className="max-w-xl text-[1.62rem] font-semibold leading-tight tracking-[-0.03em] text-slate-950 md:text-[1.8rem] xl:text-[2rem]">
                     <EditableText
-                      contentKey="ai_home_launch_title_highlight"
+                      contentKey="ai_home_launch_title_prefix"
                       as="span"
-                      fallback="real operating experience"
+                      fallback="AI products shaped by"
                     />
-                  </span>
-                </h1>
+                    <span className="mt-1 block text-brand-primary">
+                      <EditableText
+                        contentKey="ai_home_launch_title_highlight"
+                        as="span"
+                        fallback="real operating experience"
+                      />
+                    </span>
+                  </h1>
 
-                <EditableText
-                  contentKey="ai_home_launch_description"
-                  as="p"
-                  className="max-w-xl text-[15px] leading-7 text-slate-600"
-                  fallback="Om AI Solutions is building a focused portfolio of AI software around a simple idea: serious business users need better thinking tools and better operating tools. The company starts with AI Quorum and extends toward AI-native workflows for supply chain and warehouse operations."
-                />
-              </div>
+                  <EditableText
+                    contentKey="ai_home_launch_description"
+                    as="p"
+                    className="max-w-xl text-[15px] leading-7 text-slate-600"
+                    fallback="Om AI Solutions is building a focused portfolio of AI software around a simple idea: serious business users need better thinking tools and better operating tools. The company starts with AI Quorum and extends toward AI-native workflows for supply chain and warehouse operations."
+                  />
+                </div>
 
-              <div className="rounded-[1.35rem] border border-[#d1dfef] bg-[linear-gradient(180deg,#ffffff_0%,#edf4fb_100%)] px-4 py-3">
-                <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-brand-primary">Company stance</p>
-                <EditableText
-                  contentKey="ai_home_positioning_copy"
-                  as="p"
-                  className="mt-2 text-sm leading-6 text-slate-600"
-                  fallback="We are not presenting Om AI Solutions as a giant enterprise vendor. We are presenting it as a focused, founder-led company building practical AI products with a strong operational point of view."
-                />
+                <div className="w-full max-w-full rounded-[1.35rem] border border-[#d1dfef] bg-[linear-gradient(180deg,#ffffff_0%,#edf4fb_100%)] px-4 py-3">
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-brand-primary">Positioning</p>
+                  <EditableText
+                    contentKey="ai_home_positioning_copy"
+                    as="p"
+                    className="mt-2 text-sm leading-6 text-slate-600"
+                    fallback="We are not presenting Om AI Solutions as a giant enterprise vendor. We are presenting it as a focused company building practical AI products with strong business and supply chain expertise."
+                  />
+                </div>
               </div>
             </div>
 
             <div
               className={cn(
                 'flex h-full min-h-0 flex-col',
+                'min-w-0',
                 isHomeView
                   ? 'justify-center'
                   : 'rounded-[2rem] border border-[#c4d6ea] bg-[linear-gradient(180deg,rgba(248,252,255,0.9)_0%,rgba(231,240,249,0.9)_100%)] p-3 shadow-[0_18px_60px_rgba(15,23,42,0.07)] backdrop-blur md:p-4'

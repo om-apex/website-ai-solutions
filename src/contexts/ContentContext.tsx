@@ -2,6 +2,7 @@
 
 import { createContext, useContext, useState, useCallback, ReactNode } from 'react'
 import { createClient } from '@supabase/supabase-js'
+import { DEFAULT_CONTENT } from '@/lib/content'
 
 interface ContentContextType {
   content: Record<string, string>
@@ -30,14 +31,23 @@ export function ContentProvider({ children, initialContent }: ContentProviderPro
         process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
       )
 
+      const entry = DEFAULT_CONTENT[key]
+      const now = new Date().toISOString()
+      const payload = {
+        content_key: key,
+        site: 'ai',
+        page: entry?.page || 'global',
+        section: entry?.section || 'general',
+        content_type: entry?.content_type || 'text',
+        value,
+        default_value: entry?.value || value,
+        updated_at: now,
+        updated_by: 'inline-edit',
+      }
+
       const { error } = await supabase
         .from('site_content')
-        .update({
-          value,
-          updated_at: new Date().toISOString(),
-          updated_by: 'inline-edit',
-        })
-        .eq('content_key', key)
+        .upsert(payload, { onConflict: 'content_key' })
 
       if (error) {
         console.error('Failed to update content:', error)

@@ -21,7 +21,10 @@ export function Logo({ size = 'md', className = '', showText = false }: LogoProp
       tagline={brand.company.tagline}
       className={className}
       nameClassName="text-xl font-bold tracking-tight text-brand-primary"
-      nameStyle={{ fontFamily: 'var(--font-heading)' }}
+      nameStyle={{
+        fontFamily: 'var(--font-heading)',
+        textShadow: '0 1px 0 rgba(35, 77, 122, 0.32), 0 2px 3px rgba(0, 0, 0, 0.06)',
+      }}
     />
   )
 }

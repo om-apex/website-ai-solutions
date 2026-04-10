@@ -43,7 +43,7 @@ export function InteractiveImageAccordion({
 
   return (
     <div className={cn('w-full', className)}>
-      <div className="flex min-h-[480px] items-stretch justify-center gap-4 overflow-x-auto">
+      <div className="flex min-h-[540px] items-stretch justify-center gap-4 overflow-x-auto">
         {items.map((item) => {
           const isActive = item.id === activeId
           const Icon = item.icon
@@ -71,9 +71,9 @@ export function InteractiveImageAccordion({
                 }
               }}
               className={cn(
-                'relative h-[480px] shrink-0 overflow-hidden rounded-[1.75rem] text-left transition-[width,box-shadow] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]',
+                'relative h-[540px] shrink-0 overflow-hidden rounded-[1.75rem] text-left transition-[width,box-shadow] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]',
                 item.panelClass,
-                isActive ? 'w-[360px] shadow-[0_24px_70px_rgba(15,23,42,0.15)]' : 'w-[92px]'
+                isActive ? 'w-[400px] shadow-[0_24px_70px_rgba(15,23,42,0.15)]' : 'w-[92px]'
               )}
             >
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.92),transparent_34%),linear-gradient(180deg,rgba(255,255,255,0.32)_0%,rgba(244,248,255,0.86)_100%)]" />

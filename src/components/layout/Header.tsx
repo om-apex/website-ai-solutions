@@ -19,6 +19,25 @@ export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [activeHash, setActiveHash] = useState('home')
 
+  const navigateToSection = (section: 'home' | 'about' | 'contact') => {
+    if (typeof window === 'undefined') {
+      return
+    }
+
+    const target = `#${section}`
+    if (window.location.pathname !== '/') {
+      window.location.href = `/${target}`
+      return
+    }
+
+    if (window.location.hash === target) {
+      window.dispatchEvent(new HashChangeEvent('hashchange'))
+      return
+    }
+
+    window.location.hash = section
+  }
+
   useEffect(() => {
     if (pathname !== '/') {
       return
@@ -52,6 +71,21 @@ export function Header() {
 
           <nav className="hidden items-center space-x-6 md:flex">
             {navLinks.map((link) => (
+              link.hash ? (
+              <button
+                key={link.href}
+                type="button"
+                onClick={() => navigateToSection(link.hash as 'home' | 'about' | 'contact')}
+                className={`inline-flex items-center gap-1.5 text-sm font-medium transition-colors hover:text-brand-primary ${
+                  isActiveLink(link.href, link.hash)
+                    ? 'text-brand-primary'
+                    : 'text-slate-600'
+                }`}
+              >
+                <link.icon className="h-3.5 w-3.5" />
+                {link.label}
+              </button>
+              ) : (
               <Link
                 key={link.href}
                 href={link.href}
@@ -64,6 +98,7 @@ export function Header() {
                 <link.icon className="h-3.5 w-3.5" />
                 {link.label}
               </Link>
+              )
             ))}
             <a
               href="https://aiquorum.ai"
@@ -96,6 +131,24 @@ export function Header() {
           <div className="border-t border-slate-200 py-4 md:hidden">
             <nav className="flex flex-col space-y-3">
               {navLinks.map((link) => (
+                link.hash ? (
+                <button
+                  key={link.href}
+                  type="button"
+                  onClick={() => {
+                    setMobileMenuOpen(false)
+                    navigateToSection(link.hash as 'home' | 'about' | 'contact')
+                  }}
+                  className={`inline-flex items-center gap-2 text-sm font-medium transition-colors hover:text-brand-primary ${
+                    isActiveLink(link.href, link.hash)
+                      ? 'text-brand-primary'
+                      : 'text-slate-600'
+                  }`}
+                >
+                  <link.icon className="h-4 w-4" />
+                  {link.label}
+                </button>
+                ) : (
                 <Link
                   key={link.href}
                   href={link.href}
@@ -109,6 +162,7 @@ export function Header() {
                   <link.icon className="h-4 w-4" />
                   {link.label}
                 </Link>
+                )
               ))}
               <a
                 href="https://aiquorum.ai"

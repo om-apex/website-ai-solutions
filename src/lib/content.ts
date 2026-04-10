@@ -28,7 +28,7 @@ export const DEFAULT_CONTENT: Record<string, ContentEntry> = {
     section: 'contact',
   },
   ai_global_contact_location: {
-    value: 'Atlanta, Georgia',
+    value: 'Roswell, GA',
     content_type: 'text',
     page: 'global',
     section: 'contact',
@@ -99,7 +99,7 @@ export const DEFAULT_CONTENT: Record<string, ContentEntry> = {
     section: 'launch',
   },
   ai_home_launch_stat_experience: {
-    value: '55+|Combined years in software',
+    value: '60+|Combined years in software',
     content_type: 'stat',
     page: 'home',
     section: 'launch',
@@ -117,7 +117,7 @@ export const DEFAULT_CONTENT: Record<string, ContentEntry> = {
     section: 'launch',
   },
   ai_home_positioning_copy: {
-    value: 'We are not presenting Om AI Solutions as a giant enterprise vendor. We are presenting it as a focused, founder-led company building practical AI products with a strong operational point of view.',
+    value: 'We are not presenting Om AI Solutions as a giant enterprise vendor. We are presenting it as a focused company building practical AI products with strong business and supply chain expertise.',
     content_type: 'text',
     page: 'home',
     section: 'launch',
@@ -183,7 +183,7 @@ export const DEFAULT_CONTENT: Record<string, ContentEntry> = {
     section: 'shell',
   },
   ai_home_shell_about_title_v2: {
-    value: 'A founder-led AI company with a practical operating point of view',
+    value: 'An AI company with practical business and supply chain expertise',
     content_type: 'text',
     page: 'home',
     section: 'shell',
@@ -195,7 +195,7 @@ export const DEFAULT_CONTENT: Record<string, ContentEntry> = {
     section: 'shell',
   },
   ai_home_shell_about_list_v2: {
-    value: 'AI Quorum leads the public story today|Assessment tools help teams start from a practical baseline|Supply chain remains the deeper long-term product direction|The company is early-stage but grounded in operator experience',
+    value: 'AI Quorum leads the public story today|Assessment tools help teams start from a practical baseline|Supply chain remains the deeper long-term product direction|The company is early-stage but grounded in industry expertise',
     content_type: 'list',
     page: 'home',
     section: 'shell',
@@ -243,19 +243,19 @@ export const DEFAULT_CONTENT: Record<string, ContentEntry> = {
     section: 'problem',
   },
   ai_home_founder_title: {
-    value: 'Built by operators who know where AI can actually earn trust',
+    value: 'Built by industry experts who know where AI can actually earn trust',
     content_type: 'text',
     page: 'home',
     section: 'founder',
   },
   ai_home_founder_description: {
-    value: 'This company is early, but the experience behind it is not. It is being built by a Husband and Wife team with decades of software experience and deep supply chain operating context.',
+    value: 'This company is early, but the experience behind it is not. It is being built by Industry Experts with decades of software experience and deep supply chain operating context.',
     content_type: 'text',
     page: 'home',
     section: 'founder',
   },
   ai_home_proof_stat_1: {
-    value: '55+|Combined software years',
+    value: '60+|Combined software years',
     content_type: 'stat',
     page: 'home',
     section: 'founder',
@@ -509,7 +509,7 @@ export const DEFAULT_CONTENT: Record<string, ContentEntry> = {
     section: 'story',
   },
   ai_about_story_p2: {
-    value: 'The company is early, but the experience behind it is not. It is being built by a Husband and Wife team with long software careers and a strong foundation in supply chain and warehouse operations.',
+    value: 'The company is early, but the experience behind it is not. It is being built by Industry Experts with long software careers and a strong foundation in supply chain and warehouse operations.',
     content_type: 'text',
     page: 'about',
     section: 'story',
@@ -523,7 +523,7 @@ export const DEFAULT_CONTENT: Record<string, ContentEntry> = {
 
   // About Stats
   ai_about_stat_years: {
-    value: '55+|Combined software years',
+    value: '60+|Combined software years',
     content_type: 'stat',
     page: 'about',
     section: 'story',
@@ -593,13 +593,13 @@ export const DEFAULT_CONTENT: Record<string, ContentEntry> = {
     section: 'leadership',
   },
   ai_about_leader_initials: {
-    value: 'HW',
+    value: 'IE',
     content_type: 'text',
     page: 'about',
     section: 'leadership',
   },
   ai_about_leader_name: {
-    value: 'Husband and Wife',
+    value: 'Industry Experts',
     content_type: 'text',
     page: 'about',
     section: 'leadership',
