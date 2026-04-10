@@ -253,6 +253,7 @@ function ActivePanel({ activeSection }: { activeSection: ShellSection }) {
 
 function HomeContent() {
   const [activeSection, setActiveSection] = useState<ShellSection>('home')
+  const [viewportWidth, setViewportWidth] = useState(1440)
 
   useEffect(() => {
     const syncFromHash = () => setActiveSection(getHashSection())
@@ -261,15 +262,35 @@ function HomeContent() {
     return () => window.removeEventListener('hashchange', syncFromHash)
   }, [])
 
+  useEffect(() => {
+    const syncViewport = () => setViewportWidth(window.innerWidth)
+    syncViewport()
+    window.addEventListener('resize', syncViewport)
+    return () => window.removeEventListener('resize', syncViewport)
+  }, [])
+
   const isHomeView = activeSection === 'home'
+  const homeScale = isHomeView ? Math.max(0.78, Math.min(1, viewportWidth / 1440)) : 1
 
   return (
     <div className="flex min-h-0 flex-1 flex-col bg-[linear-gradient(135deg,#edf4fb_0%,#deebf7_54%,#d4e4f3_100%)] text-slate-900">
       <section className="relative flex min-h-0 flex-1 items-center overflow-hidden bg-[linear-gradient(135deg,#edf4fb_0%,#deebf7_54%,#d4e4f3_100%)]">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_14%_18%,rgba(30,77,124,0.14),transparent_24%),radial-gradient(circle_at_84%_16%,rgba(111,148,186,0.2),transparent_26%),linear-gradient(180deg,rgba(255,255,255,0.16)_0%,rgba(255,255,255,0.42)_100%)]" />
         <div className="container relative mx-auto flex h-full min-h-0 items-center px-4 py-4">
-          <div className="grid w-full gap-5 xl:grid-cols-[0.72fr_1.28fr] xl:items-stretch">
-            <div className="min-w-0 max-w-[430px] xl:max-w-none flex h-full flex-col self-center rounded-[2rem] border border-[#c4d6ea] bg-[linear-gradient(180deg,rgba(247,251,255,0.92)_0%,rgba(231,240,249,0.9)_100%)] px-5 py-4 shadow-[0_18px_60px_rgba(15,23,42,0.06)] backdrop-blur md:px-6 xl:h-[540px]">
+          <div
+            className={cn('w-full transition-transform duration-300 ease-out', isHomeView && 'origin-top')}
+            style={
+              isHomeView
+                ? {
+                    transform: `scale(${homeScale})`,
+                    transformOrigin: 'top center',
+                    width: `${100 / homeScale}%`,
+                  }
+                : undefined
+            }
+          >
+          <div className="grid w-full gap-5 lg:grid-cols-[0.72fr_1.28fr] lg:items-stretch">
+            <div className="min-w-0 max-w-[430px] lg:max-w-none flex h-full flex-col self-center rounded-[2rem] border border-[#c4d6ea] bg-[linear-gradient(180deg,rgba(247,251,255,0.92)_0%,rgba(231,240,249,0.9)_100%)] px-5 py-4 shadow-[0_18px_60px_rgba(15,23,42,0.06)] backdrop-blur md:px-6 lg:h-[540px]">
               <div className="flex h-full flex-col gap-7">
                 <SectionBadge
                   contentKey="ai_home_launch_badge"
@@ -325,6 +346,7 @@ function HomeContent() {
                 <ActivePanel activeSection={activeSection} />
               </div>
             </div>
+          </div>
           </div>
         </div>
       </section>
