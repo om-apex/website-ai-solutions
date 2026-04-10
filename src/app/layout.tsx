@@ -63,11 +63,11 @@ export default async function RootLayout({
       <head>
         <link rel="alternate" type="application/rss+xml" title="Om AI Solutions Blog" href="/blog/rss.xml" />
       </head>
-      <body className="antialiased" style={brandStyle}>
+      <body className="overflow-x-hidden antialiased" style={brandStyle}>
         <EditModeProvider>
           <div className="flex min-h-screen flex-col">
             <Header />
-            <main className="flex-1">{children}</main>
+            <main className="flex min-h-0 flex-1 flex-col">{children}</main>
             <Footer content={footerContent} />
           </div>
         </EditModeProvider>

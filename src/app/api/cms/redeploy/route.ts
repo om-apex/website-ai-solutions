@@ -4,10 +4,11 @@ export async function POST() {
   const hookUrl = process.env.VERCEL_DEPLOY_HOOK_URL
 
   if (!hookUrl) {
-    return NextResponse.json(
-      { error: 'Deploy hook not configured' },
-      { status: 500 }
-    )
+    return NextResponse.json({
+      success: true,
+      noop: true,
+      message: 'No deploy hook configured. Content changes are already served dynamically.',
+    })
   }
 
   try {

@@ -16,7 +16,7 @@ export default function BlogGrid({ articles, showCategoryChips = true }: BlogGri
           href={`/blog/${article.slug}`}
           className="group block"
         >
-          <article className="blog-card rounded-xl border bg-card shadow-sm overflow-hidden transition-all duration-200 hover:shadow-lg hover:-translate-y-1">
+          <article className="blog-card overflow-hidden rounded-[1.35rem] border border-[#c4d6ea] bg-[linear-gradient(180deg,#f7fbff_0%,#e9f1fa_100%)] shadow-[0_14px_36px_rgba(15,23,42,0.05)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_22px_48px_rgba(15,23,42,0.09)]">
             {article.headerImage && (
               <div className="relative aspect-[16/9] overflow-hidden">
                 <Image
@@ -37,21 +37,21 @@ export default function BlogGrid({ articles, showCategoryChips = true }: BlogGri
             )}
             <div className="p-5">
               {article.series && (
-                <p className="text-sm text-brand-primary font-medium mb-1">
+                <p className="mb-1 text-sm font-medium text-brand-primary">
                   {article.series.name}
                 </p>
               )}
-              <h2 className="text-base font-semibold text-gray-900 group-hover:text-brand-primary transition-colors line-clamp-2">
+              <h2 className="line-clamp-2 text-base font-semibold text-slate-950 transition-colors group-hover:text-brand-primary">
                 {article.title}
               </h2>
               {article.excerpt && (
-                <p className="text-sm text-gray-600 mt-2 line-clamp-2">
+                <p className="mt-2 line-clamp-2 text-sm text-slate-600">
                   {article.excerpt}
                 </p>
               )}
-              <div className="flex items-center gap-2 mt-2 text-xs text-gray-500">
+              <div className="mt-2 flex items-center gap-2 text-xs text-slate-500">
                 {showCategoryChips && article.category !== 'Uncategorized' && (
-                  <span className="px-2 py-0.5 bg-gray-100 rounded-full">{article.category}</span>
+                  <span className="rounded-full border border-[#d0deed] bg-white px-2 py-0.5 text-[#46698e]">{article.category}</span>
                 )}
                 <span>{article.readingTime} min read</span>
               </div>

@@ -85,7 +85,7 @@ export default function SearchDialog({ searchIndex }: SearchDialogProps) {
     <>
       <button
         onClick={handleOpen}
-        className="flex items-center gap-2 px-3 py-1.5 text-sm text-gray-500 border rounded-lg hover:border-brand-primary hover:text-brand-primary transition-colors"
+        className="flex items-center gap-2 rounded-xl border border-[#c4d6ea] bg-[linear-gradient(180deg,#f7fbff_0%,#e6eff8_100%)] px-4 py-2 text-sm text-slate-600 shadow-sm transition-colors hover:border-brand-primary hover:text-brand-primary"
         aria-label="Search articles"
       >
         <svg
@@ -103,7 +103,7 @@ export default function SearchDialog({ searchIndex }: SearchDialogProps) {
           />
         </svg>
         <span className="hidden sm:inline">Search</span>
-        <kbd className="hidden sm:inline-block ml-1 px-1.5 py-0.5 text-xs bg-gray-100 rounded">
+        <kbd className="ml-1 hidden rounded bg-white px-1.5 py-0.5 text-xs text-slate-500 sm:inline-block">
           ⌘K
         </kbd>
       </button>
@@ -113,15 +113,15 @@ export default function SearchDialog({ searchIndex }: SearchDialogProps) {
           className="fixed inset-0 z-50 flex items-start justify-center pt-[15vh]"
           onClick={handleClose}
         >
-          <div className="fixed inset-0 bg-black/50" />
+          <div className="fixed inset-0 bg-[rgba(15,23,42,0.28)] backdrop-blur-sm" />
           <div
-            className="relative w-full max-w-lg mx-4 bg-white rounded-xl shadow-2xl overflow-hidden"
+            className="relative mx-4 w-full max-w-lg overflow-hidden rounded-[1.4rem] border border-[#c4d6ea] bg-[linear-gradient(180deg,#f7fbff_0%,#e9f1fa_100%)] shadow-[0_28px_70px_rgba(15,23,42,0.18)]"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex items-center gap-3 px-4 py-3 border-b">
+            <div className="flex items-center gap-3 border-b border-[#d5e2ef] px-4 py-3">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5 text-gray-400"
+                className="h-5 w-5 text-slate-400"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -139,16 +139,16 @@ export default function SearchDialog({ searchIndex }: SearchDialogProps) {
                 placeholder="Search articles..."
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                className="flex-1 outline-none text-sm"
+                className="flex-1 bg-transparent text-sm outline-none placeholder:text-slate-400"
               />
-              <kbd className="text-xs text-gray-400 bg-gray-100 px-1.5 py-0.5 rounded">
+              <kbd className="rounded bg-white px-1.5 py-0.5 text-xs text-slate-400">
                 Esc
               </kbd>
             </div>
 
-            <div className="max-h-80 overflow-y-auto">
+            <div className="max-h-80 overflow-y-auto bg-[linear-gradient(180deg,#ffffff_0%,#eef4fb_100%)]">
               {query.length >= 2 && results.length === 0 && (
-                <p className="px-4 py-8 text-sm text-gray-500 text-center">
+                <p className="px-4 py-8 text-center text-sm text-slate-500">
                   No articles found for &ldquo;{query}&rdquo;
                 </p>
               )}
@@ -156,25 +156,25 @@ export default function SearchDialog({ searchIndex }: SearchDialogProps) {
                 <button
                   key={item.slug}
                   onClick={() => handleSelect(item.slug)}
-                  className="w-full text-left px-4 py-3 hover:bg-gray-50 transition-colors border-b last:border-b-0"
+                  className="w-full border-b border-[#d9e5f1] px-4 py-3 text-left transition-colors hover:bg-[rgba(221,234,246,0.55)] last:border-b-0"
                 >
-                  <p className="text-sm font-medium text-gray-900 line-clamp-1">
+                  <p className="line-clamp-1 text-sm font-medium text-slate-950">
                     {item.title}
                   </p>
                   <div className="flex items-center gap-2 mt-1">
                     {item.category !== 'Uncategorized' && (
-                      <span className="text-xs px-2 py-0.5 bg-gray-100 rounded-full text-gray-600">
+                      <span className="rounded-full border border-[#d0deed] bg-white px-2 py-0.5 text-xs text-slate-600">
                         {item.category}
                       </span>
                     )}
-                    <span className="text-xs text-gray-400">
+                    <span className="text-xs text-slate-400">
                       {item.readingTime} min read
                     </span>
                   </div>
                 </button>
               ))}
               {query.length < 2 && (
-                <p className="px-4 py-8 text-sm text-gray-400 text-center">
+                <p className="px-4 py-8 text-center text-sm text-slate-400">
                   Type at least 2 characters to search
                 </p>
               )}

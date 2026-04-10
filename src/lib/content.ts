@@ -62,6 +62,217 @@ export const DEFAULT_CONTENT: Record<string, ContentEntry> = {
   // HOME PAGE
   // ============================================================
 
+  ai_home_launch_badge: {
+    value: 'AI-Powered Supply Chain Software',
+    content_type: 'text',
+    page: 'home',
+    section: 'launch',
+  },
+  ai_home_launch_title_prefix: {
+    value: 'AI-Native Solutions',
+    content_type: 'text',
+    page: 'home',
+    section: 'launch',
+  },
+  ai_home_launch_title_highlight: {
+    value: 'for Business and Supply Chain',
+    content_type: 'text',
+    page: 'home',
+    section: 'launch',
+  },
+  ai_home_launch_description: {
+    value: 'Om AI Solutions builds cutting-edge AI software for warehouse and supply chain operations. Combining 30+ years of industry expertise with advanced AI to transform how enterprises operate.',
+    content_type: 'text',
+    page: 'home',
+    section: 'launch',
+  },
+  ai_home_launch_cta_primary: {
+    value: 'Explore AI Quorum',
+    content_type: 'text',
+    page: 'home',
+    section: 'launch',
+  },
+  ai_home_launch_cta_secondary: {
+    value: 'Take the AI Readiness Survey',
+    content_type: 'text',
+    page: 'home',
+    section: 'launch',
+  },
+  ai_home_launch_stat_experience: {
+    value: '55+|Combined years in software',
+    content_type: 'stat',
+    page: 'home',
+    section: 'launch',
+  },
+  ai_home_launch_stat_supply_chain: {
+    value: '20+|Years in supply chain',
+    content_type: 'stat',
+    page: 'home',
+    section: 'launch',
+  },
+  ai_home_launch_stat_focus: {
+    value: '3|Active product directions',
+    content_type: 'stat',
+    page: 'home',
+    section: 'launch',
+  },
+  ai_home_positioning_copy: {
+    value: 'We are not presenting Om AI Solutions as a giant enterprise vendor. We are presenting it as a focused, founder-led company building practical AI products with a strong operational point of view.',
+    content_type: 'text',
+    page: 'home',
+    section: 'launch',
+  },
+  ai_home_shell_card_1_badge: {
+    value: 'Flagship product',
+    content_type: 'text',
+    page: 'home',
+    section: 'shell',
+  },
+  ai_home_shell_card_1_title: {
+    value: 'AI Quorum',
+    content_type: 'text',
+    page: 'home',
+    section: 'shell',
+  },
+  ai_home_shell_card_1_description: {
+    value: 'Multi-model deliberation for decision makers who no longer trust a single AI answer.',
+    content_type: 'text',
+    page: 'home',
+    section: 'shell',
+  },
+  ai_home_shell_card_2_badge: {
+    value: 'Central Intelligence Hub',
+    content_type: 'text',
+    page: 'home',
+    section: 'shell',
+  },
+  ai_home_shell_card_2_title: {
+    value: 'Om Cortex',
+    content_type: 'text',
+    page: 'home',
+    section: 'shell',
+  },
+  ai_home_shell_card_2_description: {
+    value: 'An autonomous AI office assistant, a unified AI Platform for Businesses that connect to all their business intelligence through a single conversation interface with shared memory, tools and governance.',
+    content_type: 'text',
+    page: 'home',
+    section: 'shell',
+  },
+  ai_home_shell_card_3_badge: {
+    value: 'Roadmap',
+    content_type: 'text',
+    page: 'home',
+    section: 'shell',
+  },
+  ai_home_shell_card_3_title: {
+    value: 'AI-Native Operations',
+    content_type: 'text',
+    page: 'home',
+    section: 'shell',
+  },
+  ai_home_shell_card_3_description: {
+    value: 'The longer-range direction: AI-native workflows for warehouse and supply chain teams shaped by real operating pain.',
+    content_type: 'text',
+    page: 'home',
+    section: 'shell',
+  },
+  ai_home_shell_about_badge_v2: {
+    value: 'About Om AI Solutions',
+    content_type: 'text',
+    page: 'home',
+    section: 'shell',
+  },
+  ai_home_shell_about_title_v2: {
+    value: 'A founder-led AI company with a practical operating point of view',
+    content_type: 'text',
+    page: 'home',
+    section: 'shell',
+  },
+  ai_home_shell_about_description_v2: {
+    value: 'Om AI Solutions is built around a simple standard: the AI should help people think better, decide better, and run real work better.',
+    content_type: 'text',
+    page: 'home',
+    section: 'shell',
+  },
+  ai_home_shell_about_list_v2: {
+    value: 'AI Quorum leads the public story today|Assessment tools help teams start from a practical baseline|Supply chain remains the deeper long-term product direction|The company is early-stage but grounded in operator experience',
+    content_type: 'list',
+    page: 'home',
+    section: 'shell',
+  },
+  ai_home_shell_contact_badge_v2: {
+    value: 'Contact',
+    content_type: 'text',
+    page: 'home',
+    section: 'shell',
+  },
+  ai_home_shell_contact_title_v2: {
+    value: 'Start a conversation with Om AI Solutions',
+    content_type: 'text',
+    page: 'home',
+    section: 'shell',
+  },
+  ai_home_shell_contact_description_v2: {
+    value: 'Tell us what you are exploring, and we will route the discussion toward AI Quorum, AI readiness, or broader AI-native operations.',
+    content_type: 'text',
+    page: 'home',
+    section: 'shell',
+  },
+  ai_home_platform_title: {
+    value: 'A tighter portfolio, with AI Quorum at the front',
+    content_type: 'text',
+    page: 'home',
+    section: 'platform',
+  },
+  ai_home_platform_description: {
+    value: 'The public story should be simple: one flagship product that proves thinking quality, one operating layer that shows discipline, and one clear direction into AI-native operations.',
+    content_type: 'text',
+    page: 'home',
+    section: 'platform',
+  },
+  ai_home_problem_title: {
+    value: 'The market does not need more AI noise. It needs more dependable AI workflows.',
+    content_type: 'text',
+    page: 'home',
+    section: 'problem',
+  },
+  ai_home_problem_description: {
+    value: 'The current AI experience still pushes knowledgeable users into manual orchestration: compare models, challenge assumptions, rewrite answers, and then decide what to trust. Om AI Solutions is building around that real behavior instead of pretending one chat box solves it all.',
+    content_type: 'text',
+    page: 'home',
+    section: 'problem',
+  },
+  ai_home_founder_title: {
+    value: 'Built by operators who know where AI can actually earn trust',
+    content_type: 'text',
+    page: 'home',
+    section: 'founder',
+  },
+  ai_home_founder_description: {
+    value: 'This company is early, but the experience behind it is not. It is being built by a Husband and Wife team with decades of software experience and deep supply chain operating context.',
+    content_type: 'text',
+    page: 'home',
+    section: 'founder',
+  },
+  ai_home_proof_stat_1: {
+    value: '55+|Combined software years',
+    content_type: 'stat',
+    page: 'home',
+    section: 'founder',
+  },
+  ai_home_proof_stat_2: {
+    value: '20+|Years in supply chain',
+    content_type: 'stat',
+    page: 'home',
+    section: 'founder',
+  },
+  ai_home_proof_stat_3: {
+    value: '2025|Om AI Solutions formed',
+    content_type: 'stat',
+    page: 'home',
+    section: 'founder',
+  },
+
   // Hero Section
   ai_home_hero_badge: {
     value: 'AI-Powered Supply Chain Software',
@@ -253,6 +464,18 @@ export const DEFAULT_CONTENT: Record<string, ContentEntry> = {
     page: 'home',
     section: 'cta',
   },
+  ai_home_cta_button_primary: {
+    value: 'Take the AI Readiness Survey',
+    content_type: 'text',
+    page: 'home',
+    section: 'cta',
+  },
+  ai_home_cta_button_secondary: {
+    value: 'Request a Conversation',
+    content_type: 'text',
+    page: 'home',
+    section: 'cta',
+  },
 
   // ============================================================
   // ABOUT PAGE
@@ -266,7 +489,7 @@ export const DEFAULT_CONTENT: Record<string, ContentEntry> = {
     section: 'hero',
   },
   ai_about_hero_description: {
-    value: 'We combine 30+ years of supply chain expertise with cutting-edge AI to build software that transforms warehouse and logistics operations.',
+    value: 'We combine deep software experience with a strong supply chain point of view to build AI products that improve decision quality and operating execution.',
     content_type: 'text',
     page: 'about',
     section: 'hero',
@@ -280,19 +503,19 @@ export const DEFAULT_CONTENT: Record<string, ContentEntry> = {
     section: 'story',
   },
   ai_about_story_p1: {
-    value: 'Om AI Solutions was born from a simple observation: the supply chain industry is ripe for AI transformation, but most solutions are built by technologists who don\'t understand the operational realities of warehouses.',
+    value: 'Om AI Solutions was created around a simple belief: better AI products come from understanding the operational consequences of the decisions they support.',
     content_type: 'text',
     page: 'about',
     section: 'story',
   },
   ai_about_story_p2: {
-    value: 'With decades of hands-on experience implementing and optimizing warehouse management systems\u2014particularly Blue Yonder\u2014we know exactly where AI can make the biggest impact. We\'ve walked the warehouse floors, debugged the integrations, and felt the pain points firsthand.',
+    value: 'The company is early, but the experience behind it is not. It is being built by a Husband and Wife team with long software careers and a strong foundation in supply chain and warehouse operations.',
     content_type: 'text',
     page: 'about',
     section: 'story',
   },
   ai_about_story_p3: {
-    value: 'Now we\'re building the AI solutions we always wished we had: practical, reliable, and designed for real-world warehouse environments.',
+    value: 'That background shapes the roadmap: AI Quorum for better decision-making today, and a longer-term push toward AI-native operational software for warehouse and supply chain teams.',
     content_type: 'text',
     page: 'about',
     section: 'story',
@@ -300,7 +523,7 @@ export const DEFAULT_CONTENT: Record<string, ContentEntry> = {
 
   // About Stats
   ai_about_stat_years: {
-    value: '30+|Years in Supply Chain',
+    value: '55+|Combined software years',
     content_type: 'stat',
     page: 'about',
     section: 'story',
@@ -312,7 +535,7 @@ export const DEFAULT_CONTENT: Record<string, ContentEntry> = {
     section: 'story',
   },
   ai_about_stat_expertise: {
-    value: 'BY|Blue Yonder Expert',
+    value: '20+|Years in supply chain',
     content_type: 'stat',
     page: 'about',
     section: 'story',
@@ -370,25 +593,25 @@ export const DEFAULT_CONTENT: Record<string, ContentEntry> = {
     section: 'leadership',
   },
   ai_about_leader_initials: {
-    value: 'NT',
+    value: 'HW',
     content_type: 'text',
     page: 'about',
     section: 'leadership',
   },
   ai_about_leader_name: {
-    value: 'Nishad Tambe',
+    value: 'Husband and Wife',
     content_type: 'text',
     page: 'about',
     section: 'leadership',
   },
   ai_about_leader_role: {
-    value: 'Founder & CEO',
+    value: 'Founder & Managing Partner',
     content_type: 'text',
     page: 'about',
     section: 'leadership',
   },
   ai_about_leader_bio: {
-    value: '30+ years of supply chain leadership with deep expertise in warehouse management systems, particularly Blue Yonder. Former implementation consultant who has worked with Fortune 500 companies to optimize their distribution operations. Now applying that experience to build AI solutions that solve real problems warehouse teams face every day.',
+    value: 'Software and supply chain leader with deep warehouse and WMS experience, focused on building practical AI products with a defensible operating point of view.',
     content_type: 'text',
     page: 'about',
     section: 'leadership',
