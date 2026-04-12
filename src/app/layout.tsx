@@ -18,6 +18,7 @@ const spaceGrotesk = Space_Grotesk({
 import { Header } from "@/components/layout/Header"
 import { Footer } from "@/components/layout/Footer"
 import { EditModeProvider } from "@/contexts/EditModeContext"
+import { CommentAuthProvider } from "@/contexts/CommentAuthContext"
 import { getSiteContent, getCompanyContact, getBrandFromConfig } from "@/lib/content-fetcher"
 import { DEFAULT_CONTENT } from "@/lib/content"
 import { Analytics } from '@vercel/analytics/react'
@@ -65,11 +66,13 @@ export default async function RootLayout({
       </head>
       <body className="overflow-x-hidden antialiased" style={brandStyle}>
         <EditModeProvider>
-          <div className="flex min-h-screen flex-col">
-            <Header />
-            <main className="flex min-h-0 flex-1 flex-col">{children}</main>
-            <Footer content={footerContent} />
-          </div>
+          <CommentAuthProvider>
+            <div className="flex min-h-screen flex-col">
+              <Header />
+              <main className="flex min-h-0 flex-1 flex-col">{children}</main>
+              <Footer content={footerContent} />
+            </div>
+          </CommentAuthProvider>
         </EditModeProvider>
         <Analytics />
         <SpeedInsights />
