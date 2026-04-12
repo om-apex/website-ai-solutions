@@ -13,6 +13,8 @@ import {
   getArticleByPart,
 } from '@/lib/blog';
 import ArticleNavigator from '@/components/blog/ArticleNavigator';
+import { DiscussionCta } from '@/components/blog/comments/DiscussionCta';
+import { DiscussionSection } from '@/components/blog/comments/DiscussionSection';
 import { createHeadingIdFactory, extractArticleHeadings } from '@/lib/blog-navigation';
 
 interface PageProps {
@@ -144,12 +146,15 @@ export default async function ArticlePage({ params }: PageProps) {
                   </div>
                 </header>
 
+                <DiscussionCta articleTitle={metadata.title} />
+
                 <div className="mt-6 xl:hidden">
                   <ArticleNavigator
                     compact
                     headings={headings}
                     series={metadata.series}
                     seriesHref={seriesHref}
+                    discussionHref="#discussion"
                     previous={prevLink ? { slug: prevLink.slug, title: prevLink.title } : null}
                     next={nextLink ? { slug: nextLink.slug, title: nextLink.title } : null}
                   />
@@ -169,6 +174,8 @@ export default async function ArticlePage({ params }: PageProps) {
                     {content}
                   </ReactMarkdown>
                 </div>
+
+                <DiscussionSection articleSlug={slug} articleTitle={metadata.title} />
 
                 {(prevLink || nextLink) && (
                   <nav className="mt-12 grid gap-4 border-t border-[rgba(148,163,184,0.18)] pt-8 md:grid-cols-2">
@@ -212,6 +219,7 @@ export default async function ArticlePage({ params }: PageProps) {
               headings={headings}
               series={metadata.series}
               seriesHref={seriesHref}
+              discussionHref="#discussion"
               previous={prevLink ? { slug: prevLink.slug, title: prevLink.title } : null}
               next={nextLink ? { slug: nextLink.slug, title: nextLink.title } : null}
             />
