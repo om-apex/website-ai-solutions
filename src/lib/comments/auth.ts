@@ -10,6 +10,8 @@ const ALLOWED_HOSTS = new Set([
   'www.omaisolutions.com',
   'omsupplychain.com',
   'www.omsupplychain.com',
+  'omluxeproperties.com',
+  'www.omluxeproperties.com',
   'localhost',
   '127.0.0.1',
 ])
@@ -64,4 +66,3 @@ export async function startCommentOAuth(
     },
   })
 }
-

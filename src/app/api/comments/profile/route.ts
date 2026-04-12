@@ -10,12 +10,26 @@ export async function GET() {
   const { data: { user } } = await supabase.auth.getUser()
 
   if (!user) {
-    return NextResponse.json({ error: 'Authentication required' }, { status: 401 })
+    return NextResponse.json(
+      { authenticated: false, profile: null },
+      {
+        headers: {
+          'Cache-Control': 'no-store, max-age=0',
+        },
+      }
+    )
   }
 
   try {
     const profile = await getCurrentCommenterProfile(supabase, user.id)
-    return NextResponse.json({ authenticated: true, profile })
+    return NextResponse.json(
+      { authenticated: true, profile },
+      {
+        headers: {
+          'Cache-Control': 'no-store, max-age=0',
+        },
+      }
+    )
   } catch (error) {
     return NextResponse.json(
       { error: error instanceof Error ? error.message : 'Failed to load profile' },
@@ -43,6 +57,14 @@ export async function PATCH(request: Request) {
     lastSignInProvider: typeof body.lastSignInProvider === 'string' ? body.lastSignInProvider : undefined,
   }
 
+  if (
+    typeof payload.displayName === 'undefined' &&
+    typeof payload.avatarUrl === 'undefined' &&
+    typeof payload.lastSignInProvider === 'undefined'
+  ) {
+    return NextResponse.json({ error: 'No profile changes provided' }, { status: 400 })
+  }
+
   const profile = await updateCommenterProfile(supabase, user.id, payload)
-  return NextResponse.json({ profile })
+  return NextResponse.json({ authenticated: true, profile })
 }

@@ -22,5 +22,9 @@ export async function GET() {
     authenticated: true,
     user: identity,
     profile,
+  }, {
+    headers: {
+      'Cache-Control': 'no-store, max-age=0',
+    },
   })
 }

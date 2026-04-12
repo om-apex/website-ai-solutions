@@ -5,8 +5,6 @@ import {
   createPendingComment,
   getApprovedCommentsForArticle,
   normalizeCommentSlug,
-  upsertCommenterProfile,
-  writeCommentModerationEvent,
 } from '@/lib/comments/server'
 
 export async function GET(
@@ -18,11 +16,18 @@ export async function GET(
 
   try {
     const comments = await getApprovedCommentsForArticle(supabase, slug)
-    return NextResponse.json({
-      targetCompanyId: COMMENT_TARGET_COMPANY_ID,
-      articleSlug: normalizeCommentSlug(slug),
-      comments,
-    })
+    return NextResponse.json(
+      {
+        targetCompanyId: COMMENT_TARGET_COMPANY_ID,
+        articleSlug: normalizeCommentSlug(slug),
+        comments,
+      },
+      {
+        headers: {
+          'Cache-Control': 'no-store, max-age=0',
+        },
+      }
+    )
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Failed to load comments'
     return NextResponse.json({ error: message }, { status: 500 })
@@ -48,6 +53,10 @@ export async function POST(
 
   const articleTitle = typeof body.articleTitle === 'string' ? body.articleTitle.trim() : ''
   const bodyText = typeof body.bodyText === 'string' ? body.bodyText.trim() : ''
+  const editorialItemId =
+    typeof body.editorialItemId === 'string' && body.editorialItemId.trim()
+      ? body.editorialItemId.trim()
+      : null
   const parentCommentId = typeof body.parentCommentId === 'string' && body.parentCommentId.trim()
     ? body.parentCommentId.trim()
     : null
@@ -61,24 +70,17 @@ export async function POST(
   }
 
   try {
-    await upsertCommenterProfile(supabase, user)
-    const comment = await createPendingComment(supabase, user, {
+    const result = await createPendingComment(supabase, user, {
       articleSlug: slug,
       articleTitle,
+      editorialItemId,
       bodyText,
       parentCommentId,
     })
 
-    await writeCommentModerationEvent(supabase, {
-      commentId: comment.id,
-      actorType: 'public_user',
-      actorAuthUserId: user.id,
-      actorEmail: user.email ?? null,
-      action: 'submitted',
-    })
-
     return NextResponse.json({
-      comment,
+      comment: result.comment,
+      profile: result.profile,
       message: 'Comment submitted for moderation',
     }, { status: 201 })
   } catch (error) {

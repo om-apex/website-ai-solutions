@@ -1,8 +1,8 @@
 import type { SupabaseClient, User } from '@supabase/supabase-js'
 import type {
   CommentCreateInput,
+  CommentCreateResult,
   CommentModerationAction,
-  CommentModerationEvent,
   CommentStatus,
   CommentUpdateProfileInput,
   CommenterIdentity,
@@ -182,25 +182,64 @@ export async function createPendingComment(
   supabase: SupabaseClient,
   user: User,
   input: CommentCreateInput
-) {
+) : Promise<CommentCreateResult> {
+  const profile = await upsertCommenterProfile(supabase, user)
+  const articleSlug = normalizeCommentSlug(input.articleSlug)
+  const articleTitle = input.articleTitle.trim()
+  const bodyText = input.bodyText.trim()
+
+  if (input.parentCommentId) {
+    const { data: parentComment, error: parentError } = await supabase
+      .from('blog_comments')
+      .select('id, target_company_id, article_slug')
+      .eq('id', input.parentCommentId)
+      .maybeSingle()
+
+    if (parentError) {
+      throw parentError
+    }
+
+    if (
+      !parentComment ||
+      parentComment.target_company_id !== COMMENT_TARGET_COMPANY_ID ||
+      parentComment.article_slug !== articleSlug
+    ) {
+      throw new Error('Parent comment does not belong to the requested article')
+    }
+  }
+
   const { data, error } = await supabase
     .from('blog_comments')
     .insert({
       target_company_id: COMMENT_TARGET_COMPANY_ID,
-      article_slug: normalizeCommentSlug(input.articleSlug),
-      article_title: input.articleTitle.trim(),
+      article_slug: articleSlug,
+      article_title: articleTitle,
+      editorial_item_id: input.editorialItemId ?? null,
       auth_user_id: user.id,
       parent_comment_id: input.parentCommentId ?? null,
-      author_display_name: getCommentDisplayName(user),
-      author_avatar_url: getCommentAvatarUrl(user),
-      body_text: input.bodyText.trim(),
+      author_display_name: profile.displayName,
+      author_avatar_url: profile.avatarUrl,
+      body_text: bodyText,
       status: 'pending',
     })
     .select('*')
     .single()
 
   if (error) throw error
-  return mapCommentRow(data as Record<string, unknown>)
+  const comment = mapCommentRow(data as Record<string, unknown>)
+
+  await writeCommentModerationEvent(supabase, {
+    commentId: comment.id,
+    actorType: 'public_user',
+    actorAuthUserId: user.id,
+    actorEmail: user.email ?? null,
+    action: 'submitted',
+  })
+
+  return {
+    comment,
+    profile,
+  }
 }
 
 export async function writeCommentModerationEvent(

@@ -64,11 +64,28 @@ export interface CommenterSessionPayload {
   profile: CommenterProfile | null
 }
 
+export interface CommentProfilePayload {
+  authenticated: boolean
+  profile: CommenterProfile | null
+}
+
+export interface ArticleCommentsPayload {
+  targetCompanyId: string
+  articleSlug: string
+  comments: PublicComment[]
+}
+
 export interface CommentCreateInput {
   articleSlug: string
   articleTitle: string
+  editorialItemId?: string | null
   bodyText: string
   parentCommentId?: string | null
+}
+
+export interface CommentCreateResult {
+  comment: PublicComment
+  profile: CommenterProfile
 }
 
 export interface CommentUpdateProfileInput {
