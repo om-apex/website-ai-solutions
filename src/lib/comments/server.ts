@@ -192,11 +192,23 @@ export function getCommentAvatarUrl(user: User) {
 }
 
 export function getCommentProvider(user: User) {
-  const provider = user.app_metadata?.provider
-  if (provider === LINKEDIN_SUPABASE_PROVIDER) {
+  const metadata = user.user_metadata as Record<string, unknown> | undefined
+  const issuer = typeof metadata?.iss === 'string' ? metadata.iss.toLowerCase() : null
+  if (issuer?.includes('linkedin.com')) {
     return 'linkedin'
   }
-  return typeof provider === 'string' ? provider : null
+  if (issuer?.includes('accounts.google.com')) {
+    return 'google'
+  }
+
+  const provider = typeof user.app_metadata?.provider === 'string' ? user.app_metadata.provider : null
+  if (provider === LINKEDIN_SUPABASE_PROVIDER || provider === 'linkedin') {
+    return 'linkedin'
+  }
+  if (provider === 'google') {
+    return 'google'
+  }
+  return null
 }
 
 export function mapUserToCommentProfile(user: User): CommentUpdateProfileInput {
@@ -244,12 +256,13 @@ export function mapCommenterIdentity(
   user: User,
   profile: CommenterProfile | null
 ): CommenterIdentity {
+  const currentProvider = getCommentProvider(user)
   return {
     authUserId: user.id,
     email: profile?.email ?? user.email ?? null,
     displayName: profile?.displayName ?? getCommentDisplayName(user),
     avatarUrl: profile?.avatarUrl ?? getCommentAvatarUrl(user),
-    lastSignInProvider: profile?.lastSignInProvider ?? getCommentProvider(user),
+    lastSignInProvider: currentProvider ?? profile?.lastSignInProvider ?? null,
   }
 }
 

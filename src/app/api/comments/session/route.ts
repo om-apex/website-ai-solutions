@@ -1,5 +1,5 @@
 import { createClient } from '@/lib/supabase/server'
-import { getCurrentCommenterProfile, mapCommenterIdentity } from '@/lib/comments/server'
+import { getCommentProvider, getCurrentCommenterProfile, mapCommenterIdentity, upsertCommenterProfile } from '@/lib/comments/server'
 import { NextResponse } from 'next/server'
 
 export async function GET() {
@@ -15,7 +15,11 @@ export async function GET() {
     })
   }
 
-  const profile = await getCurrentCommenterProfile(supabase, user.id)
+  const currentProvider = getCommentProvider(user)
+  const existingProfile = await getCurrentCommenterProfile(supabase, user.id)
+  const profile = currentProvider && existingProfile?.lastSignInProvider !== currentProvider
+    ? await upsertCommenterProfile(supabase, user)
+    : existingProfile
   const identity = mapCommenterIdentity(user, profile)
 
   return NextResponse.json({
