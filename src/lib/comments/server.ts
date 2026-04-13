@@ -24,6 +24,7 @@ import {
 } from './types'
 
 export const COMMENT_TARGET_COMPANY_ID = 'om-ai-solutions'
+const LINKEDIN_SUPABASE_PROVIDER = 'linkedin_oidc'
 
 const COMMENT_SUBMISSION_RATE_LIMIT_MAX = 3
 const COMMENT_SUBMISSION_RATE_LIMIT_WINDOW_MS = 15 * 60 * 1000
@@ -192,6 +193,9 @@ export function getCommentAvatarUrl(user: User) {
 
 export function getCommentProvider(user: User) {
   const provider = user.app_metadata?.provider
+  if (provider === LINKEDIN_SUPABASE_PROVIDER) {
+    return 'linkedin'
+  }
   return typeof provider === 'string' ? provider : null
 }
 

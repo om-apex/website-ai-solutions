@@ -2,6 +2,7 @@ import type { SupabaseClient } from '@supabase/supabase-js'
 import type { CommentAuthProvider } from './types'
 
 export const COMMENT_AUTH_CALLBACK_PATH = '/api/comments/auth/callback'
+const LINKEDIN_SUPABASE_PROVIDER = 'linkedin_oidc'
 
 const ALLOWED_HOSTS = new Set([
   'omapex.com',
@@ -55,9 +56,10 @@ export async function startCommentOAuth(
   const url = new URL(currentUrl)
   const redirectTarget = getSafeCommentRedirectTarget(url.toString(), url.origin)
   const redirectTo = buildCommentAuthCallbackUrl(url.origin, redirectTarget)
+  const supabaseProvider = provider === 'linkedin' ? LINKEDIN_SUPABASE_PROVIDER : provider
 
   return supabase.auth.signInWithOAuth({
-    provider,
+    provider: supabaseProvider as 'google' | 'linkedin_oidc',
     options: {
       redirectTo,
       queryParams: provider === 'google'
