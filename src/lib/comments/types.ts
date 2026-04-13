@@ -2,6 +2,20 @@ export type CommentAuthProvider = 'google' | 'linkedin'
 
 export type CommentStatus = 'pending' | 'approved' | 'rejected' | 'spam'
 
+export const COMMENT_BODY_MAX_LENGTH = 5000
+
+export const COMMENT_REPORT_NOTE_MAX_LENGTH = 500
+
+export const COMMENT_FLAG_REASONS = [
+  'spam',
+  'abuse',
+  'off_topic',
+  'misinformation',
+  'other',
+] as const
+
+export type CommentFlagReason = (typeof COMMENT_FLAG_REASONS)[number]
+
 export type CommentModerationAction =
   | 'submitted'
   | 'approved'
@@ -9,6 +23,22 @@ export type CommentModerationAction =
   | 'marked_spam'
   | 'restored'
   | 'flagged'
+
+export type CommentApiErrorCode =
+  | 'authentication_required'
+  | 'invalid_commenter'
+  | 'invalid_json'
+  | 'invalid_article_slug'
+  | 'invalid_article_title'
+  | 'invalid_comment_body'
+  | 'invalid_parent_comment'
+  | 'reply_depth_exceeded'
+  | 'comment_rate_limited'
+  | 'comment_not_found'
+  | 'comment_not_reportable'
+  | 'cannot_flag_own_comment'
+  | 'comment_already_flagged'
+  | 'flag_rate_limited'
 
 export interface CommenterProfile {
   authUserId: string
@@ -86,10 +116,29 @@ export interface CommentCreateInput {
 export interface CommentCreateResult {
   comment: PublicComment
   profile: CommenterProfile
+  message: string
 }
 
 export interface CommentUpdateProfileInput {
   displayName?: string
   avatarUrl?: string | null
   lastSignInProvider?: string | null
+}
+
+export interface CommentFlagInput {
+  commentId: string
+  reason: CommentFlagReason
+  note?: string | null
+}
+
+export interface CommentFlagResult {
+  commentId: string
+  reason: CommentFlagReason
+  message: string
+}
+
+export interface CommentApiErrorPayload {
+  error: string
+  code?: CommentApiErrorCode
+  retryAfterSeconds?: number
 }

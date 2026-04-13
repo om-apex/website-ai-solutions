@@ -2,7 +2,8 @@
 
 import { useState, type FormEvent } from 'react'
 import { Loader2, Send } from 'lucide-react'
-import { submitArticleComment } from '@/lib/comments/client'
+import { CommentRequestError, submitArticleComment } from '@/lib/comments/client'
+import { COMMENT_BODY_MAX_LENGTH } from '@/lib/comments/types'
 
 interface CommentComposerProps {
   articleSlug: string
@@ -22,11 +23,32 @@ export function CommentComposer({
   const [notice, setNotice] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
 
+  const formatRetryDelay = (retryAfterSeconds: number) => {
+    if (retryAfterSeconds < 60) {
+      return `${retryAfterSeconds} second${retryAfterSeconds === 1 ? '' : 's'}`
+    }
+
+    const minutes = Math.ceil(retryAfterSeconds / 60)
+    return `${minutes} minute${minutes === 1 ? '' : 's'}`
+  }
+
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     const trimmedBody = bodyText.trim()
 
-    if (!trimmedBody || submitting) {
+    if (submitting) {
+      return
+    }
+
+    if (!trimmedBody) {
+      setError('Enter a comment before submitting it for review.')
+      setNotice(null)
+      return
+    }
+
+    if (trimmedBody.length > COMMENT_BODY_MAX_LENGTH) {
+      setError(`Comments must be ${COMMENT_BODY_MAX_LENGTH} characters or fewer.`)
+      setNotice(null)
       return
     }
 
@@ -35,7 +57,7 @@ export function CommentComposer({
     setNotice(null)
 
     try {
-      await submitArticleComment(articleSlug, {
+      const result = await submitArticleComment(articleSlug, {
         articleSlug,
         articleTitle,
         editorialItemId,
@@ -43,10 +65,22 @@ export function CommentComposer({
       })
 
       setBodyText('')
-      setNotice('Submitted for moderation. Your comment will appear after review.')
+      setNotice(result.message)
       onSubmitted?.()
     } catch (submitError) {
-      setError(submitError instanceof Error ? submitError.message : 'Failed to submit comment')
+      if (
+        submitError instanceof CommentRequestError &&
+        submitError.code === 'comment_rate_limited' &&
+        typeof submitError.retryAfterSeconds === 'number'
+      ) {
+        setError(
+          `You have reached the comment limit for now. Try again in ${formatRetryDelay(
+            submitError.retryAfterSeconds
+          )}.`
+        )
+      } else {
+        setError(submitError instanceof Error ? submitError.message : 'Failed to submit comment')
+      }
     } finally {
       setSubmitting(false)
     }
@@ -64,12 +98,13 @@ export function CommentComposer({
           onChange={(event) => setBodyText(event.target.value)}
           placeholder="Share a perspective, question, or practical counterpoint."
           rows={6}
-          maxLength={5000}
-          className="w-full rounded-[1.2rem] border border-[rgba(148,163,184,0.18)] bg-white px-4 py-3 text-sm leading-6 text-slate-900 shadow-inner outline-none transition-colors placeholder:text-slate-400 focus:border-brand-primary focus:ring-2 focus:ring-[rgba(30,77,124,0.08)]"
+          maxLength={COMMENT_BODY_MAX_LENGTH}
+          aria-invalid={Boolean(error)}
+          className="w-full rounded-[1.2rem] border border-[rgba(148,163,184,0.18)] bg-white px-4 py-3 text-sm leading-6 text-slate-900 shadow-inner outline-none transition-colors placeholder:text-slate-400 focus:border-brand-primary focus:ring-2 focus:ring-[rgba(30,77,124,0.08)] aria-[invalid=true]:border-rose-300 aria-[invalid=true]:focus:border-rose-400 aria-[invalid=true]:focus:ring-[rgba(225,29,72,0.12)]"
         />
         <div className="flex items-center justify-between gap-3 text-xs text-slate-500">
-          <span>Comments are reviewed before they appear publicly.</span>
-          <span>{bodyText.length}/5000</span>
+          <span>Comments are reviewed before they appear publicly. Rapid repeat posting is throttled.</span>
+          <span>{bodyText.length}/{COMMENT_BODY_MAX_LENGTH}</span>
         </div>
       </div>
 

@@ -60,7 +60,8 @@ export function CommentAuthGate({ children }: CommentAuthGateProps) {
         Sign in to comment
       </div>
       <p className="mt-3 max-w-2xl text-sm leading-6 text-slate-600">
-        Use Google or LinkedIn to join the discussion. Comments are reviewed before they appear publicly.
+        Use Google or LinkedIn to join the discussion. Comments are reviewed before they appear publicly,
+        and signed-in readers can report approved comments for moderator review.
       </p>
 
       <div className="mt-5 grid gap-3 sm:grid-cols-2">

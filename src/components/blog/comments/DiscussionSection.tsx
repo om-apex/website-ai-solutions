@@ -1,7 +1,7 @@
 'use client'
 
 import { useCallback, useEffect, useState } from 'react'
-import { AlertCircle, Loader2, MessagesSquare } from 'lucide-react'
+import { AlertCircle, MessagesSquare } from 'lucide-react'
 import { CommentAuthGate } from './CommentAuthGate'
 import { CommentComposer } from './CommentComposer'
 import { CommentList } from './CommentList'
@@ -54,7 +54,7 @@ export function DiscussionSection({
           </h2>
           <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-600">
             Use this section to challenge the argument, add a practical example, or ask a focused question
-            about {articleTitle}.
+            about {articleTitle}. Signed-in readers can also report approved comments for moderator review.
           </p>
         </div>
 
