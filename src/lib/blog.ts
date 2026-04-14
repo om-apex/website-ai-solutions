@@ -10,6 +10,7 @@ const CONTENT_DIR = path.join(process.cwd(), 'src/content/blog')
 function normalizeMarkdownSyntax(markdown: string): string {
   return markdown
     .replace(/^(#{1,6})([^#\s])/gm, '$1 $2')
+    .replace(/([^\n])\n([ \t]*-{3,}[ \t]*)(?=\n|$)/g, '$1\n\n$2')
 }
 
 // --- Reading time calculation ---

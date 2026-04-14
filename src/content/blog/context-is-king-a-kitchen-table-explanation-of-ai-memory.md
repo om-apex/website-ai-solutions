@@ -131,4 +131,3 @@ And maybe that is true for humans too.
 
 The people who understand us best are not the ones who remember everything we ever said.
 They are the ones who remember what mattered.
-------
