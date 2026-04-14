@@ -27,9 +27,9 @@ Now, we started debating…..and while doing that an idea struck us.
 
 What if we write this up as a story and then feed it to LLMs and ask them to finish this story. It will be interesting to see the results. And boy, I was surprised to see how each model responded.
 
-———
-###Gemini 3.1 Pro’s response
-————
+---
+### Gemini 3.1 Pro’s response
+---
 The Story Continued...
 Now, we started debating. She looked at me, her eyes narrowing as she did the mental math.
 
@@ -49,10 +49,10 @@ I paused, looking at my phone, where my Claude and Gemini agents were currently 
 My wife smiled. "So, in AI, Context is King... but Discrimination is the Queen?"
 
 "Exactly," I laughed. "And just like in this house, the Queen usually makes the final call on what's actually important."
-——-
-###Grok’s response
+---
+### Grok’s response
 This surprised me because he knew my AI Quorum work and he weaved that story into this one. I said wow, where are we heading here. 
-———
+---
 Now, we started debating. She looked at me with that curious smile she gets when something really clicks and said, “So if one person needs ten years of history… and there are millions of users… how is that even possible? Wouldn’t the models need an absolutely insane amount of memory?”
 
 “Exactly,” I said. “That’s the trillion-dollar problem right now. Even if we could technically store that much, it would be ridiculously expensive and slow. And here’s the twist — not all context is useful. If I remembered every single conversation, every argument, every random thought from the last forty years with perfect clarity, I’d probably make worse decisions because I’d be drowning in noise.”
@@ -65,9 +65,9 @@ We stayed up late talking about it. She asked me how my work on AI Quorum tries 
 I laughed. “Something like that.”
 
 She squeezed my hand and said with a playful smile, “Well, after forty-plus years of building context with you, I think you’re more than qualified for the job.”
-——-
-###Claude Responded with this
-———-
+---
+### Claude Responded with this
+---
 Now, we started debating…..
 
 "But wait," Sumedha said, leaning forward a little, the way she does when something has really caught her. "If every user needs 10 years of context, and there are millions of users — that's not just a memory problem. That's an infrastructure problem. A planetary one."
@@ -99,9 +99,9 @@ And until AI can carry something like that — something continuous, something r
 
 We sat there a little longer, the two of us, surrounded by years of unspoken context.
 And I thought: maybe that's not such a bad problem to be working on.
-———
-###ChatGPT's response
------
+---
+### ChatGPT's response
+---
 Now, we started debating.
 
 She said, “So the problem is memory?”

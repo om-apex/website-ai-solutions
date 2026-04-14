@@ -7,6 +7,12 @@ export type { Article, ArticleSeries }
 
 const CONTENT_DIR = path.join(process.cwd(), 'src/content/blog')
 
+function normalizeMarkdownSyntax(markdown: string): string {
+  return markdown
+    .replace(/^(#{1,6})([^#\s])/gm, '$1 $2')
+    .replace(/^[-—–]{3,}\s*$/gm, '---')
+}
+
 // --- Reading time calculation ---
 function calculateReadingTime(text: string): number {
   const words = text.trim().split(/\s+/).length
@@ -190,7 +196,7 @@ export function getArticleContent(slug: string): { metadata: Article; content: s
   const raw = fs.readFileSync(filePath, 'utf-8')
   const { content } = matter(raw)
 
-  const processed = processCallouts(content)
+  const processed = processCallouts(normalizeMarkdownSyntax(content))
 
   return { metadata, content: processed }
 }

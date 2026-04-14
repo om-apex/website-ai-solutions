@@ -100,27 +100,25 @@ export default function BlogPage() {
               items={activeSeries}
             />
           )}
-          {categoryChips}
-        </div>
-      }
-    >
-      {items.length === 0 ? (
-        <div className="space-y-6">
           <SeriesSpotlight
             eyebrow="Coming Into View"
             title="What this journal will cover"
             description="AI Solutions will publish around the practical operating questions behind AI-native software, not just commentary about the market."
             items={upcomingTracks}
           />
-          <div className="blog-shell-card rounded-[1.6rem] p-10 text-center shadow-[0_12px_36px_rgba(15,23,42,0.05)]">
-            <div className="inline-flex items-center gap-2 rounded-full border border-[#c8d9ec] bg-white px-4 py-1.5 text-sm font-medium text-brand-primary">
-              <Search className="h-4 w-4" />
-              First articles coming soon
-            </div>
-            <p className="mt-4 text-base text-slate-600">
-              The editorial system is ready. The first published posts will appear here in the same format you see elsewhere in the site.
-            </p>
+          {categoryChips}
+        </div>
+      }
+    >
+      {items.length === 0 ? (
+        <div className="blog-shell-card rounded-[1.6rem] p-10 text-center shadow-[0_12px_36px_rgba(15,23,42,0.05)]">
+          <div className="inline-flex items-center gap-2 rounded-full border border-[#c8d9ec] bg-white px-4 py-1.5 text-sm font-medium text-brand-primary">
+            <Search className="h-4 w-4" />
+            First articles coming soon
           </div>
+          <p className="mt-4 text-base text-slate-600">
+            The editorial system is ready. The first published posts will appear here in the same format you see elsewhere in the site.
+          </p>
         </div>
       ) : (
         <>
