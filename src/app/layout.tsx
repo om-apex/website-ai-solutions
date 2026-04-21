@@ -75,7 +75,7 @@ export default async function RootLayout({
             </div>
           </CommentAuthProvider>
         </EditModeProvider>
-        <VoiceWidget agent_id="om-ai-solutions" brand="om-ai-solutions" />
+        <VoiceWidget agent_id="agent_18c69fe1d7786ace21f6eafec9" brand="om-ai-solutions" />
         <Analytics />
         <SpeedInsights />
       </body>
