@@ -23,6 +23,7 @@ import { getSiteContent, getCompanyContact, getBrandFromConfig } from "@/lib/con
 import { DEFAULT_CONTENT } from "@/lib/content"
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
+import { VoiceWidget } from "@/components/VoiceWidget"
 
 export const metadata: Metadata = {
   title: {
@@ -74,6 +75,7 @@ export default async function RootLayout({
             </div>
           </CommentAuthProvider>
         </EditModeProvider>
+        <VoiceWidget agent_id="om-ai-solutions" brand="om-ai-solutions" />
         <Analytics />
         <SpeedInsights />
       </body>
