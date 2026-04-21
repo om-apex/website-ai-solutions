@@ -1,17 +1,90 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRetell } from '../hooks/useRetell';
-import { Mic, PhoneOff, Loader2, AlertCircle, X, HelpCircle, Lock } from 'lucide-react';
+import { Mic, PhoneOff, Loader2, AlertCircle, X, HelpCircle, Lock, Settings } from 'lucide-react';
 
 interface VoiceWidgetProps {
   agent_id: string;
   brand: string;
 }
 
+function getBrowserInstructions() {
+  if (typeof window === 'undefined') return 'chrome';
+  
+  const ua = navigator.userAgent.toLowerCase();
+  if (ua.includes('firefox')) return 'firefox';
+  if (ua.includes('safari') && !ua.includes('chrome')) return 'safari';
+  if (ua.includes('edg/')) return 'edge';
+  return 'chrome'; // Default/fallback (Chrome, Brave, Arc, etc.)
+}
+
 export function VoiceWidget({ agent_id, brand }: VoiceWidgetProps) {
   const { callStatus, errorMsg, isMicDenied, startCall, stopCall, dismissMicError } = useRetell();
   const [showTooltip, setShowTooltip] = useState(false);
+  const [browserType, setBrowserType] = useState('chrome');
+
+  useEffect(() => {
+    setBrowserType(getBrowserInstructions());
+  }, []);
+
+  const renderInstructions = () => {
+    if (browserType === 'safari') {
+      return (
+        <div className="bg-slate-50 p-3 rounded-lg text-sm text-slate-700 flex flex-col gap-2 mt-1">
+          <div className="flex items-start gap-2">
+            <Settings size={16} className="mt-0.5 text-slate-500 shrink-0" />
+            <span>1. In your menu bar, click <strong>Safari</strong> {'>'} <strong>Settings for This Website...</strong></span>
+          </div>
+          <div className="flex items-start gap-2">
+            <span className="font-bold text-slate-500 w-4 text-center shrink-0">2.</span>
+            <span>Next to <strong>Microphone</strong>, change the dropdown to <strong>Allow</strong>.</span>
+          </div>
+          <div className="flex items-start gap-2">
+            <span className="font-bold text-slate-500 w-4 text-center shrink-0">3.</span>
+            <span><strong>Refresh the page</strong> and try again.</span>
+          </div>
+        </div>
+      );
+    }
+    
+    if (browserType === 'firefox') {
+      return (
+        <div className="bg-slate-50 p-3 rounded-lg text-sm text-slate-700 flex flex-col gap-2 mt-1">
+          <div className="flex items-start gap-2">
+            <Lock size={16} className="mt-0.5 text-slate-500 shrink-0" />
+            <span>1. Click the <strong>permissions icon</strong> (crossed-out mic or lock) in your address bar.</span>
+          </div>
+          <div className="flex items-start gap-2">
+            <span className="font-bold text-slate-500 w-4 text-center shrink-0">2.</span>
+            <span>Click the <strong>X</strong> next to "Blocked Temporarily" or change to "Allow".</span>
+          </div>
+          <div className="flex items-start gap-2">
+            <span className="font-bold text-slate-500 w-4 text-center shrink-0">3.</span>
+            <span><strong>Refresh the page</strong> and click the mic button again.</span>
+          </div>
+        </div>
+      );
+    }
+
+    // Default for Chrome, Edge, Arc, Brave, etc.
+    return (
+      <div className="bg-slate-50 p-3 rounded-lg text-sm text-slate-700 flex flex-col gap-2 mt-1">
+        <div className="flex items-start gap-2">
+          <Lock size={16} className="mt-0.5 text-slate-500 shrink-0" />
+          <span>1. Click the <strong>Site Information icon</strong> (often a Tune or Lock icon) in your browser's address bar.</span>
+        </div>
+        <div className="flex items-start gap-2">
+          <span className="font-bold text-slate-500 w-4 text-center shrink-0">2.</span>
+          <span>Find the <strong>Microphone</strong> setting and toggle it on or switch to "Allow".</span>
+        </div>
+        <div className="flex items-start gap-2">
+          <span className="font-bold text-slate-500 w-4 text-center shrink-0">3.</span>
+          <span><strong>Refresh the page</strong> and click the mic button again.</span>
+        </div>
+      </div>
+    );
+  };
 
   return (
     <div className="fixed bottom-4 right-4 z-50 flex flex-col items-end gap-3">
@@ -43,20 +116,7 @@ export function VoiceWidget({ agent_id, brand }: VoiceWidgetProps) {
           <p className="text-sm text-slate-600">
             To speak with the AI assistant, your browser needs permission to use the microphone.
           </p>
-          <div className="bg-slate-50 p-3 rounded-lg text-sm text-slate-700 flex flex-col gap-2 mt-1">
-            <div className="flex items-start gap-2">
-              <Lock size={16} className="mt-0.5 text-slate-500 shrink-0" />
-              <span>1. Click the <strong>Lock icon</strong> in your browser's address bar (at the top).</span>
-            </div>
-            <div className="flex items-start gap-2">
-              <span className="font-bold text-slate-500 w-4 text-center shrink-0">2.</span>
-              <span>Find the <strong>Microphone</strong> setting and toggle it on or switch to "Allow".</span>
-            </div>
-            <div className="flex items-start gap-2">
-              <span className="font-bold text-slate-500 w-4 text-center shrink-0">3.</span>
-              <span><strong>Refresh the page</strong> and click the mic button again.</span>
-            </div>
-          </div>
+          {renderInstructions()}
           <button onClick={dismissMicError} className="mt-2 w-full py-2 bg-slate-900 text-white rounded-lg text-sm font-medium hover:bg-slate-800 transition-colors">
             Got it, I'll fix this
           </button>
