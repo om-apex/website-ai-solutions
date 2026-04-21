@@ -47,7 +47,7 @@ export function useRetell() {
         const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
         stream.getTracks().forEach(track => track.stop());
       } catch (err) {
-        throw new Error('Microphone permission denied. Please allow microphone access to use the voice assistant.');
+        throw new Error('Microphone access denied. Please click the 🔒 icon in your browser address bar to allow microphone access, then try again.');
       }
 
       // Fetch access token from backend
