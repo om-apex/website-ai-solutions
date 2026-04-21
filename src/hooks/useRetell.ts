@@ -42,6 +42,14 @@ export function useRetell() {
       setCallStatus('connecting');
       setErrorMsg(null);
 
+      // Request microphone permissions explicitly before connecting to prevent hanging connections
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        stream.getTracks().forEach(track => track.stop());
+      } catch (err) {
+        throw new Error('Microphone permission denied. Please allow microphone access to use the voice assistant.');
+      }
+
       // Fetch access token from backend
       const response = await fetch('https://om-cortex.onrender.com/api/retell/web-call', {
         method: 'POST',
