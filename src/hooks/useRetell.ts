@@ -6,6 +6,7 @@ export type CallStatus = 'idle' | 'connecting' | 'active' | 'error';
 export function useRetell() {
   const [callStatus, setCallStatus] = useState<CallStatus>('idle');
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const [isMicDenied, setIsMicDenied] = useState(false);
   const retellClientRef = useRef<RetellWebClient | null>(null);
 
   useEffect(() => {
@@ -15,6 +16,7 @@ export function useRetell() {
 
     retellClient.on('call_started', () => {
       setCallStatus('active');
+      setIsMicDenied(false);
     });
 
     retellClient.on('call_ended', () => {
@@ -24,7 +26,6 @@ export function useRetell() {
     retellClient.on('error', (error: any) => {
       setCallStatus('error');
       setErrorMsg(error?.message || 'An error occurred during the call');
-      // If error is related to microphone access, handle gracefully
     });
 
     retellClient.on('update', (update: any) => {
@@ -41,13 +42,16 @@ export function useRetell() {
     try {
       setCallStatus('connecting');
       setErrorMsg(null);
+      setIsMicDenied(false);
 
       // Request microphone permissions explicitly before connecting to prevent hanging connections
       try {
         const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
         stream.getTracks().forEach(track => track.stop());
       } catch (err) {
-        throw new Error('Microphone access denied. Please click the 🔒 icon in your browser address bar to allow microphone access, then try again.');
+        setIsMicDenied(true);
+        setCallStatus('idle');
+        return; // Stop execution without throwing
       }
 
       // Fetch access token from backend
@@ -88,11 +92,17 @@ export function useRetell() {
       setCallStatus('idle');
     }
   };
+  
+  const dismissMicError = () => {
+    setIsMicDenied(false);
+  };
 
   return {
     callStatus,
     errorMsg,
+    isMicDenied,
     startCall,
     stopCall,
+    dismissMicError,
   };
 }
