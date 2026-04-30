@@ -85,8 +85,8 @@ export const omAiSolutions: Brand = {
     location: 'Atlanta, Georgia',
   },
   logo: {
-    png: '/images/logo.png',
-    svg: '/images/logo.svg',
+    png: '/images/company-logo/logo.png',
+    svg: '/images/company-logo/logo.svg',
   },
 }
 

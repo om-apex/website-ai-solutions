@@ -19,6 +19,7 @@ export function Logo({ size = 'md', className = '', showText = false }: LogoProp
       showTagline
       companyName={brand.company.shortName}
       tagline={brand.company.tagline}
+      diamondColor="#1E4D7C"
       className={className}
       nameClassName="text-xl font-bold tracking-tight text-brand-primary"
       nameStyle={{
